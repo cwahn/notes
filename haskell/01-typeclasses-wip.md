@@ -111,7 +111,7 @@ $$
 [[ g \ x_1 \ x_2 \ ... \ x_n ]]
 $$
 
-where, $x_i$ has type of $f \ t_i$ for a Functor $f$, $g$ has type of $t_1 \rarr \ t_2 \ \rarr \ ... \ \rarr t_n \ \rarr \ t$, and the entire expression has type of $f \ t$. The expression represents applying multiple 'effectful' arguments to a function, which is a generalization of `fmap`. `fmap` helps apply a single argument function to 'effectful' argument, but can't help applying the multi-argument function to arguments; application of a function to the first argument left a function under context or container, which `fmap` couldn't help anymore.
+where, $x_i$ has type of $f \ t_i$ for a Functor $f$, $g$ has type of $t_1 \rightarrow \ t_2 \ \rightarrow \ ... \ \rightarrow t_n \ \rightarrow \ t$, and the entire expression has type of $f \ t$. The expression represents applying multiple 'effectful' arguments to a function, which is a generalization of `fmap`. `fmap` helps apply a single argument function to 'effectful' argument, but can't help applying the multi-argument function to arguments; application of a function to the first argument left a function under context or container, which `fmap` couldn't help anymore.
 
 The equivalent expression of the above notation is the following. Be advised that `Control.Applicative` defines `(<*>)` as a convenient infix shorthand for `fmap`.
 

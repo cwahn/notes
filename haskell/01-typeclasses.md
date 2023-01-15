@@ -1,13 +1,35 @@
-# Haskell Typeclasses
+# Typeclasses
+
+- [Typeclasses](#typeclasses)
+  - [Functor](#functor)
+    - [Definition](#definition)
+    - [Laws](#laws)
+    - [Intuition](#intuition)
+    - [Instances](#instances)
+  - [Applicative](#applicative)
+    - [Definition](#definition-1)
+    - [Laws](#laws-1)
+    - [Intuition](#intuition-1)
+  - [References](#references)
+
 ## Functor
 ### Definition
 ``` haskell
 class Functor f where
     fmap :: a -> b -> f a -> f b
-    -- Convenient methods
-    (<$) :: a -> f a -> f b
+    -- Method for conveniance
+    (<$) :: a -> f b -> f a
     (<$) = fmap . const
 ```
+
+### Laws
+``` haskell
+fmap id = id
+fmap (g. h) = (fmap g) . (fmap h)
+```
+
+Unlike any other type classes, a given concrete type could be an instance of at most one Functor. This can be [proven](https://archive.md/U8xIY) by the [free theorem](https://homepages.inf.ed.ac.uk/wadler/topics/parametricity.html#free) for the type of `fmap`.
+
 ### Intuition
 A Functor could be seen as a 'container' with the ability to apply a function to every element in the container. Another useful point of view is that a Functor represents some sort of 'computation context'. 
 
@@ -15,7 +37,9 @@ A Functor could be seen as a 'container' with the ability to apply a function to
 
 From the 'container' point of view, `fmap` could be seen as applying a function to each element of the container without altering the structure of the container. On the other hand, from the 'context' point of view, `fmap` could be seen as applying a function to a value without altering the context.
 
-`<$` simply changes any Functor instance to the Functor instance with given value like a constant function.
+`<$` simply changes any Functor instance to the Functor instance with a given value like a constant function.
+
+Just like many other functions which take more than one argument, `fmap` could be seen as a curried form. In this point of view, it could be seen as `fmap :: (a -> b) -> (f a -> f b)` which is often referred to as a *lifting*; `fmap` lifts a function from the 'normal world' to 'f world'. 
 
 ### Instances
 A list constructor `[]` and maybe constructor `Maybe` are Functor.
@@ -34,12 +58,55 @@ instance Functor Maybe where
 
 In idiomatic Haskell, one uses `f` to represent a Functor, `g`, and `h` to represent a function.
 
-There are other instances of Functor in standard library; 
+There are other instances of Functor in the standard library; 
 1. `Either e` 
 2. `((,) e)` (cf. `(e, )` would be a more intuitive form, but it is not allowed in Haskell.)
 3. `((->) e)` (cf. Also could be seen as `(e ->)` or any function takes e as an argument.) Alternatively, `((->) e)` could be seen as a context, producing a value of type `e` only available in a read-only manner.
 4. `IO`; `IO a` represent computation producing a value of type `a` which may have side effect. If `m` computes value `x` while producing IO-effect, `fmap g x` will produce the same IO-effect, while computing `g x`.
 5. `Tree`, `Map`, `Sequence`, etc.
+
+## Applicative
+### Definition
+``` haskell
+class Functor f => Applicative f where
+    pure :: a -> f a
+    infixl 4 <*>, *>, <*
+    (<*>) :: f (a -> b) -> f a -> f b
+    -- Methods for conveniance
+    (*>) :: f a -> f b -> f b
+    a1 *> a2 = (id <$ a1) <*> a2
+
+    (<*) :: f a -> f b -> f a
+    (<*) = liftA2 const
+```
+### Laws
+- The identity law:
+    ``` haskell
+    pure id <*> v = v
+    ```
+- Homomorphism:
+   ``` haskell
+   pure f <*> pure x = pure (f x)
+   ```
+- Interchange:
+   ``` haskell
+   u <*> pure y = pure (\f -> f y) <*> u
+   ```
+- Composition:
+   ``` haskell
+   u <*> (v <*> w) = pure . <*> u <*> v <*> w
+   ```
+
+There is also a law specifying how to relate `Applicative` to `Functor`.
+``` haskell
+fmap g x = pure g <*> x
+```
+
+### Intuition
+
+
+Considering left-to-right writing law, homomorphism, interchange, and composition constitute an algorithm to transform any expression with `pure` and `(<*>)` to the canonical form; only one use of `pure` at the very beginning, and left-nested occurrences of `(<*>)`. Composition allows reassociating the `(<*>)`, interchange allows to move `(<*>)` leftward, and homomorphism allows to collapse of multiple adjacent occurrences of `(<*>)` to one.   
+
 
 ## References
 1. https://wiki.haskell.org/Typeclassopedia

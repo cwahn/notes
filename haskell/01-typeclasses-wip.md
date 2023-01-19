@@ -12,6 +12,12 @@
     - [Intuition](#intuition-1)
     - [Utility functions](#utility-functions)
     - [Alternative Formulation](#alternative-formulation)
+  - [Monad](#monad)
+    - [Definition](#definition-2)
+    - [Laws](#laws-2)
+    - [Intuition](#intuition-2)
+    - [Instances](#instances-1)
+    - [Utility Functions](#utility-functions-1)
   - [References](#references)
 
 ## Functor
@@ -152,7 +158,52 @@ class Applicative f => Monidal f where
 
 A *monoidal* Functor with satisfying some laws is Applicative. `unit` and `(**)` is equivalent with `pure` and `(<*>)` and the laws are equivalent with the Applicative laws.
 
+## Monad
+### Definition
+``` haskell
+class Applicative f => Monad f where
+    return :: a -> m a
+    (>>=) :: m a -> (a -> m b) -> m b
+    (>>) :: m a -> m b -> m b
+    m >> n = m >>= \_ -> m b
+```
+
+### Laws
+``` haskell
+return a >>= k = k a
+m >>= return = m
+m >>= (/x -> k x >>= h) = (m >>= k) >> = h
+```
+
+### Intuition
+`return` is the `pure` of Applicative, but has unfortunately two different names. Likewise, the `(>>)` is the same as `(*>)` of the Applicative. Eventually, `return` and `(>>)` could be removed from the definition of `Monad`.  
+
+One could see the `(>>)` as a specialized version of `(>>=)`, which ignores the *result* of the first Monad, but not its *effect*.
+
+### Instances
+1. The most simple instance of Monad is `Identity` which is nothing but a wrapper. Refer ["The Trivial Monad"](http://blog.sigfpe.com/2007/04/trivial-monad.html).
+2. The next simplest instance of `Monad` is `Maybe`;
+    ``` haskell
+    instance Monad Maybe where
+        return :: a -> Maybe a
+        return = Just 
+
+        (>>=) :: Maybe a -> (a -> Maybe b) -> Maybe b
+        (just x) >>= g = g x
+        Nothing >>= _ = Nothing
+    ```
+    One could chain *failable* computations to make a complex computation, which will fail as soon as one of its components fails. 
+3. The list constructor `[]` is also a good instance of Monad. 
+4. `IO` is the only magical Monad with the support of compilers. Implementation of `IO` Monad may differ from compiler to compiler. It allows one to build up possibly *effectful* computations in a functionally pure manner. 
+5. `((->) e)` is known as the 'reader Monad'. It represents a computation in which a value of type e is available as a read-only environment. `Control.Monad.Reader` provides the `Reader e a` type, which is a `new type` wrapper around `(e -> a)`, with some `Reader`-specific utility functions like `ask`, `asks`, and `local`. `ask` retrieves the environment, `asks` retrieves a function of the environment, `local` represents sub-computation under the different environment.
+6. The `Writer` Monad provided by `Control.Monad.Writer` module. Which allows information to be collected as a computation progresses. `Writer w a` is isomorphic to `(a, w)`, where the output value `a` is carried along with an annotation or 'log' of type `w`, which must be an instance of Monoid. `tell` function will perform actual logging. 
+7. The `Control.Monad.State` module provides the `State s a` Monad. Which is a `newtype` wrapper id `s -> (a, s)`. It represents a computation that produces a result `a`, along with accessing and modifying the state of type `s`. The module also provides `State`-specific functions such as `get`, `gets`, `put`, and `modify`; `get` read the current state, `gets` read a function of the current state, `put` overwrites the state, and `modify` applies a function to the current state.
+8. The `control.Monad.Cont` module provides the `Cont` Monad. It represents computations in continuation-passing style. It can be used to suspend and resume computations and implement non-local transfers of control co-routines, and other complex control structures all in a functionally pure manner. `Cont` has been called the '[mother of all monads](http://blog.sigfpe.com/2008/12/mother-of-all-monads.html)' because of its universal properties.
+
+### Utility Functions
+
+WIP
+
 
 ## References
 1. https://wiki.haskell.org/Typeclassopedia
-

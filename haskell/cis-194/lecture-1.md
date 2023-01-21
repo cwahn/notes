@@ -1,3 +1,23 @@
+# Lecture 1 Study Note
+
+- [Lecture 1 Study Note](#lecture-1-study-note)
+  - [Declarations and variable](#declarations-and-variable)
+  - [Basic Types](#basic-types)
+  - [GHCi](#ghci)
+  - [Arithmetic](#arithmetic)
+  - [Boolean Logic](#boolean-logic)
+  - [Defining Basic Functions](#defining-basic-functions)
+  - [Pair](#pair)
+  - [Using Functions and Multiple Arguments](#using-functions-and-multiple-arguments)
+  - [Lists](#lists)
+  - [Constructing Lists](#constructing-lists)
+  - [Function on Lists](#function-on-lists)
+  - [Combining Functions](#combining-functions)
+  - [References](#references)
+
+This is a personal note for CIS 194: Introduction to Haskell (Spring 2013).[^1]
+
+
 ## Declarations and variable 
 
 ``` haskell
@@ -59,7 +79,7 @@ s = "Hello, Haskell!"
 ## GHCi
 GHCi is a REPL(Read-Eval-Print-Loop) for Haskell. One can load Haskell files with `:load` or `:l`, or reload them with `:reload` or `:r`, and ask types of expressions with `:type` or `:t`.
 
-## Arithmatic
+## Arithmetic
 ``` haskell
 ex1 = 1 + 2
 ex2 = 4 - 3
@@ -201,8 +221,5 @@ hailstoneLen :: Integer -> Integer
 hailstoneLen n = lenList (hailstonseq n) - 1
 ```
 
-
-
-
-## Reference
-1. https://www.seas.upenn.edu/~cis1940/spring13/lectures/01-intro.html
+## References
+[^1] https://www.seas.upenn.edu/~cis1940/spring13/lectures/01-intro.html

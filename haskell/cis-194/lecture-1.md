@@ -222,4 +222,5 @@ hailstoneLen n = lenList (hailstonseq n) - 1
 ```
 
 ## References
-[^1] https://www.seas.upenn.edu/~cis1940/spring13/lectures/01-intro.html
+
+[^1]: https://www.seas.upenn.edu/~cis1940/spring13/lectures/01-intro.html

@@ -1,6 +1,6 @@
-# Lecture 1 Study Note
+# Lecture 1
 
-- [Lecture 1 Study Note](#lecture-1-study-note)
+- [Lecture 1](#lecture-1)
   - [Declarations and variable](#declarations-and-variable)
   - [Basic Types](#basic-types)
   - [GHCi](#ghci)
@@ -16,7 +16,6 @@
   - [References](#references)
 
 This is a personal note for CIS 194: Introduction to Haskell (Spring 2013).[^1]
-
 
 ## Declarations and variable 
 

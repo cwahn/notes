@@ -1,6 +1,6 @@
-# Lecture 1
+# Lecture 1 Introduction to Haskell
 
-- [Lecture 1](#lecture-1)
+- [Lecture 1 Introduction to Haskell](#lecture-1-introduction-to-haskell)
   - [Declarations and variable](#declarations-and-variable)
   - [Basic Types](#basic-types)
   - [GHCi](#ghci)

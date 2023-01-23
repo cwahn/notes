@@ -6,8 +6,10 @@
     - [Polymorphic Data Type](#polymorphic-data-type)
     - [Polymorphic Function](#polymorphic-function)
   - [The Prelude](#the-prelude)
-  - [Total and Partial Functions](#total-and-partial-functions)
-    - [Replacing Partial Functions](#replacing-partial-functions)
+    - [Basic Data Types](#basic-data-types)
+    - [Basic Typeclasses](#basic-typeclasses)
+    - [Numbers](#numbers)
+    - [Numeric Typeclasses](#numeric-typeclasses)
     - [Writing Partial Functions](#writing-partial-functions)
   - [References](#references)
 
@@ -47,6 +49,205 @@ One important thing to remember is that **the caller picks the types**. Therefor
 ## The Prelude
 The `Prelude` is a module with many standard definitions which get implicitly imported to every Haskell program. It’s worth spending some time skimming through its documentation[^2] to familiarize oneself with the available tools.
 
+### Basic Data Types
+- `data Bool = False | True`
+- `(&&) :: Bool -> Bool -> Bool`
+- `(||) :: Bool -> Bool -> Bool`
+- `not :: Bool -> Bool`
+- `data Maybe a = Nothing | Just a`
+- `maybe b -> (a -> b) -> Maybe a -> b`
+  - Takes a default value, a function, and a `Maybe` value and returns the default value if the `Maybe` value is `Nothing`. Otherwise, applies the function to the value inside the `Maybe` value and return the result.
+- `data Either a b = Left a | Right b`
+- `either :: (a -> c) -> (b -> c) -> Either a b -> c`
+  - If `Either` value is `Left`, it applies the first function, otherwise, applies the second function and returns the result.
+- `data Ordering = LT | EQ | GT`
+- `data Char`
+- `type String = [Char]`
+- `fst :: (a, b) -> a`
+- `snd :: (a, b) -> b`
+- `curry :: ((a, b) -> c) -> a -> b -> c`
+  - It converts an uncurried function to a curried function.
+- `uncurry :: a -> b -> c -> ((a, b) -> c)`
+  - It converts a curried function to a function on a pair.
+
+### Basic Typeclasses
+- ```haskell
+  class Eq a where
+    (==) :: a -> a -> Bool -- or
+    (/=) :: a -> a -> Bool 
+  ```
+- ```haskell
+  class Eq a => Ord a where
+    compare :: a -> a -> Ordering -- or
+    (<=) :: a -> a -> Bool 
+  ```
+- ```haskell
+  class Enum a where
+    toEnum :: Int -> a
+    fromEnum :: a -> Int
+  ```
+- ```haskell
+  class Bounded a where
+  ```
+  - It could be derived for any `Enum` type and also may be derived for a single-constructor type whose constituents types are also in `Bounded`.
+
+### Numbers
+- `data Int`
+  - A fixed-precision integer type with at least the range [-2^29 .. 2^29-1]. The exact range for a given implementation can be determined by using `minBound` and `maxBound` from the Bounded class.
+- `data Interger`
+  - Arbitrary precision integers. In contrast with fixed-size integral types such as Int, the Integer type represents the entire infinite range of integers.  
+  Integers are stored in a kind of sign-magnitude form, hence do not expect two's complement form when using bit operations.  
+  If the value is small (fit into an Int), IS constructor is used. Otherwise Integer and IN constructors are used to store a BigNat representing respectively the positive or the negative value magnitude.
+- `data Float`
+  - Single-precision floating point numbers. It is desirable that this type be at least equal in range and precision to the IEEE single-precision type.
+- `data Double`
+  - Double-precision floating point numbers. It is desirable that this type be at least equal in range and precision to the IEEE double-precision type.
+- `type Rational = Ratio Integer`
+  - Arbitrary-precision rational numbers, represented as a ratio of two Integer values. A rational number may be constructed using the `%` operator.
+- `data Word`
+  - A Word is an unsigned integral type, with the same size as Int.
+
+### Numeric Typeclasses
+- ```haskell
+  class Num a where
+    (+) :: a -> a -> a
+    (*) :: a -> a -> a
+    abs :: a -> a
+    signum :: a -> a
+    fromInteger :: Integer -> a
+    negate :: a -> a
+  ```
+- ```haskell
+  class (Num a, Ord a) => Real a where
+  ```
+- ```haskell
+  class (Real a, Enum a) => Integeral a where
+    quotRem :: a -> a -> (a , a)
+    toInteger :: a -> Integer  
+  ```
+- ```haskell
+  class Num a => Fractional a where
+    fromRational :: Rational -> a
+    recip :: a -> a
+  ```
+- ```haskell
+  class Fractional a => Floating a where
+    pi :: a
+    exp :: a -> a
+    log :: a -> a
+    sin :: a -> a
+    cos :: a -> a
+    asin :: a -> a
+    acos :: a -> a
+    atan :: a -> a
+    sinh :: a -> a
+    cosh :: a -> a
+    asinh :: a -> a
+    acosh :: a -> a
+    atanh :: a -> a
+  ```
+- ```haskell
+  class (Real a, Fractional a) => RealFrac a where
+    properFraction :: Integeral b => a -> (b, a)
+  ```
+  - The function `properFraction` takes a real fractional number x and returns a pair (n,f) such that x = n+f, and:
+    - n is an integral number with the same sign as x; and
+    - f is a fraction with the same type and sign as x, and with absolute value less than 1.
+- ```haskell
+  class (RealFrac a, Floating a) => RealFloat a where
+    floatRadix :: Integer -> a
+    floatDigits :: a -> Int
+    floatRange :: a -> (a, a)
+    decodeFloat :: a -> (Integer, Int)
+    encodeFloat :: Integer -> Int -> a
+    isNaN :: a -> Bool
+    isInfinite :: a -> Bool
+    isDenormalized :: a -> Bool
+    isNegativeZero :: a -> Bool
+    isIEEE :: a -> Bool
+  ```
+
+### Numeric Functions
+- `subtract :: Num a => a -> a -> a`
+- `even :: Integeral a => a -> Bool`
+- `odd :: Integeral a => a -> Bool`
+- `gcd :: Integeral a => a -> a -> a`
+- `lcm :: Integeral a => a -> a -> a`
+- `(^) :: (Num a, Integeral b) => a -> b -> a`
+- `(^^) :: (Fractional a, Integeral b) => a -> b -> a`
+- `fromIntegeral :: (Integeral a, Num b) => a -> b`
+- `realToFrac :: (Real a, Fractional b) => a -> b`
+
+### Semigroup and Monoid
+- ```haskell
+  class Semigourp a where
+    (<>) :: a -> a -> a
+    
+  -- Laws
+  -- Associativity
+  a <> (b <> c) == (a <> b) <> c
+  ```
+- ```haskell
+  class Semigroup a => Monoid a where
+    mempty :: a
+
+  -- Laws 
+  -- Left identity
+  mempty <> a == a
+  -- Right identity
+  a <> mempty == a
+  -- Associativity
+  a <> (b <> c) == (a <> b) <> c
+  -- Concatenation
+  mconcat = foldr <> mempty
+  ```
+
+### Monads and Functors
+- ```haskell
+  class Functor f where
+    fmap :: (a -> b) -> f a -> f b
+
+  -- Laws
+  -- Identity
+  fmap id = id
+  -- Composition
+  fmap (f . g) = fmap f . fmap g
+  ```
+- ```haskell
+  class Functor f => Applicative f where
+    pure :: a -> f a
+    -- Either (<*>) or liftA2
+    <*> :: f (a -> b) -> f a -> f b
+    liftA2 :: (a -> b -> c) -> f a -> f b -> f c
+
+  -- Laws
+  -- Identity 
+  pure id <*> v = v
+  -- Composition
+  pure (.) <*> u <*> v <*> w = u <*> (v <*> w)
+  -- Homomorphism
+  pure f <*> pure x = pure (f x)
+  -- Interchange
+  u <*> pure y = pure (\f -> f y) <*> u  
+  ```
+- ```haskell
+  class Applicative m => Monad m where
+    (>>=) :: m a -> (a -> m b) -> m b
+    return = pure
+
+  -- Laws
+  -- Left identity
+  return a >>= k = k a
+  -- Right identity
+  a >>= return = a
+  -- Associativity
+  m >>= (\x -> k x >> = h) = (m >>= k) >>= h
+  ```
+- ```haskell
+  class Monad m => MonadFail m where
+    WIP
+  ```
+  
 ## Total and Partial Functions
 One could think of a polymorphic type; `[a] -> a`. For example, the `head` function returning the first element of the input list has a such type. What happens when `[]` comes in as input? It crashes. Nothing else it could do. There is no way to make up a value of arbitrary type out of air.
 

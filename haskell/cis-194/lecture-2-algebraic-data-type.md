@@ -26,17 +26,20 @@ parity = Odd
 listOfParities :: [Parity]
 listOfParities = [Odd, Even, Even, Odd, Even]
 ```
+
 ```haskell
 isEven :: Parity -> Bool
 isEven Odd = False
 isEven _ = True
 ```
+
 ## Beyond Enumerations
 ```haskell
 data FailableDouble = Failure
   | Ok Double
   deriving Show
 ```
+
 `Failure` is a value of the `FailableDouble` type, but `Ok` by itself is not a value of the `FailableDouble` type; it takes an argument of type `Double`. For example, `Ok 3.14` is a value of `FailableDouble` type.
 
 ```haskell 

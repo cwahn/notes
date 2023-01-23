@@ -23,18 +23,18 @@ toDigitsRev n
 
 takeLastTwo :: [Int] -> [Int]
 takeLastTwo [] = []
-takeLastTwo (x : y : []) = [x, y]
+takeLastTwo [x, y] = [x, y]
 takeLastTwo (x : xs) = takeLastTwo xs
 
 removeLastTwo :: [Int] -> [Int]
 removeLastTwo [] = []
-removeLastTwo (x : y : []) = []
+removeLastTwo [x, y] = []
 removeLastTwo (x : xs) = x : removeLastTwo xs
 
 doubleEveryOther :: [Int] -> [Int]
 doubleEveryOther [] = []
-doubleEveryOther (x : []) = [x]
-doubleEveryOther (x : y : []) = (2 * x) : y : []
+doubleEveryOther [x] = [x]
+doubleEveryOther [x, y] = [2 * x, y]
 doubleEveryOther xs = doubleEveryOther (removeLastTwo xs) ++ doubleEveryOther (takeLastTwo xs)
 
 -- Exercise 3 The output of doubleEveryOther has a mix of one-digit and two-digit numbers. Define the function

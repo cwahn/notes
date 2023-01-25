@@ -13,6 +13,7 @@
     - [Writing Partial Functions](#writing-partial-functions)
   - [References](#references)
 
+
 This is a personal note for CIS 194: Introduction to Haskell (Spring 2013).[^1]
 
 ## Recursion Patterns
@@ -97,13 +98,13 @@ The `Prelude` is a module with many standard definitions which get implicitly im
 - `data Interger`
   - Arbitrary precision integers. In contrast with fixed-size integral types such as Int, the Integer type represents the entire infinite range of integers.  
   Integers are stored in a kind of sign-magnitude form, hence do not expect two's complement form when using bit operations.  
-  If the value is small (fit into an Int), IS constructor is used. Otherwise Integer and IN constructors are used to store a BigNat representing respectively the positive or the negative value magnitude.
+  If the value is small (fit into an Int), IS constructor is used. Otherwise, Integer and IN constructors are used to store a BigNat representing respectively the positive or the negative value magnitude.
 - `data Float`
   - Single-precision floating point numbers. It is desirable that this type be at least equal in range and precision to the IEEE single-precision type.
 - `data Double`
   - Double-precision floating point numbers. It is desirable that this type be at least equal in range and precision to the IEEE double-precision type.
 - `type Rational = Ratio Integer`
-  - Arbitrary-precision rational numbers, represented as a ratio of two Integer values. A rational number may be constructed using the `%` operator.
+  - Arbitrary-precision rational numbers are represented as a ratio of two Integer values. A rational number may be constructed using the `%` operator.
 - `data Word`
   - A Word is an unsigned integral type, with the same size as Int.
 
@@ -146,13 +147,15 @@ The `Prelude` is a module with many standard definitions which get implicitly im
     acosh :: a -> a
     atanh :: a -> a
   ```
+
+### a2
 - ```haskell
   class (Real a, Fractional a) => RealFrac a where
     properFraction :: Integeral b => a -> (b, a)
   ```
   - The function `properFraction` takes a real fractional number x and returns a pair (n,f) such that x = n+f, and:
     - n is an integral number with the same sign as x; and
-    - f is a fraction with the same type and sign as x, and with absolute value less than 1.
+    - f is a fraction with the same type and sign as x and with an absolute value less than 1
 - ```haskell
   class (RealFrac a, Floating a) => RealFloat a where
     floatRadix :: Integer -> a
@@ -196,12 +199,11 @@ The `Prelude` is a module with many standard definitions which get implicitly im
   mempty <> a == a
   -- Right identity
   a <> mempty == a
-  -- Associativity
+  -- Associativity(same with Semigroup law)
   a <> (b <> c) == (a <> b) <> c
   -- Concatenation
   mconcat = foldr <> mempty
   ```
-
 ### Monads and Functors
 - ```haskell
   class Functor f where
@@ -234,9 +236,9 @@ The `Prelude` is a module with many standard definitions which get implicitly im
   class Applicative m => Monad m where
     (>>=) :: m a -> (a -> m b) -> m b
     return = pure
-
+    
   -- Laws
-  -- Left identity
+  -- Left identity 
   return a >>= k = k a
   -- Right identity
   a >>= return = a
@@ -245,9 +247,160 @@ The `Prelude` is a module with many standard definitions which get implicitly im
   ```
 - ```haskell
   class Monad m => MonadFail m where
-    WIP
+    -- ? Not sure if this is required method
+    fail :: String -> m a 
+
+    -- Laws
+    -- Left zero
+    fail s >>= f = fail s
   ```
+- `mapM_ :: (Foldable t, Monad m) => (a -> m a) -> t a -> m ()`
+  - Map each element of structure to monadic action and evaluate these actions from left to right, and ignore the result. For not ignoring the version, see `mapM`.
+- `sequence_ :: (Foldable t, Monad m) => t m a -> m ()`
+  - Evaluate monadic action in the structure from left to right, ignoring the result. For not ignoring theversion, see the `sequence`.
+- `(=<<) :: Monad m => (a -> m b) -> m a -> m b -- infixr 1`
+  - The same with `(>>=)`, but inversed arguments.
+
+### Folds and Traversals
+- ```haskell
+  class Foldable t where
+    flodMap :: Monoid m => (a -> m) -> t a -> m -- or
+    foldr :: (a -> b -> b) -> b -> t a -> b
+  ```
+  - The folding of `foldMap` is right-associative and lazy, for the left-associative and strict version, see `foldMap'`.
+  - The `foldr` is the right associative folding of a structure, lazy in the accumulator. When applied to a binary operator, an initial value, and a list, the initial value is often the right identity of the operator.
+  - `foldl :: (b -> a -> b) -> b -> t a -> b`
+  - `elem :: Eq a => a -> t a -> Bool -- infix 4`
+  - `maximum :: forall a. Ord a => t a -> a`
+    - This function is non-total and will raise a runtime exception for an empty argument.
+  - `minimum :: forall a. Ord a => t a -> a`
+    - Also non-total
+  - `sum :: Num a => t a -> a`
+  - `product :: Num a => t a -> a`
+- ```haskell
+  class (Foldable t, Functor t) => Traversable t where
+    traverse :: Applicative f => (a -> f b) -> t a -> f (t b) -- or
+    sequenceA :: Applicative f => t (f a) -> f (t a)
+  ```
+  - A `Functor` representing data structures that can be transformed to the structures of the *same shape* by performing `Applicative`(or, thereby `Monad`) action on each element from left to right. 
+
+### Miscellaneous Functions
+- `id :: a -> a`
+- `const :: a -> b -> a`
+- `(.) :: (b -> c) -> (a -> b) -> (a -> c) -- infixr 9`
+- `flip :: (a -> b -> c) -> b -> a -> c`
+- `($) :: forall r a (b :: TYPE r). (a -> b) -> a -> b -- infixr 0`
+  - Function application operator with low, right-associative binding precedence.
+- `until :: (a -> Bool) -> (a -> a) -> a -> a`
+  - `until p f` yields the result of applying `f` until `p` holds.
+- `asTypeOf :: a -> a -> a`
+  - A type restricted version of `const`.
+- `error :: forall (r :: RuntimeRep). forall (a :: TYPE r). HasCallStack => [Char] -> a`
+  - Stops execution and displays an error message.
+- `errorWithoutStackTrace :: forall (r :: RuntimeRep). forall (a :: TYPE r). [Char] -> a`
+  - A variant of `error`.
+- `undefined :: forall (r :: RuntimeRep). forall (a :: TYPE r). HasCallStack => a`
+  - A special case of `error`.
+- `seq :: forall {r :: RuntimeRep} a (b :: TYPE r). a -> b -> b -- infixr 0`
+  - WIP
+- `($!) :: forall r a (b :: TYPE r). (a -> b) -> a -> b -- infixr 0`
+  - Strict (call-by-value) operator. The argument will be evaluated to weak-head normal from(WHNF) and calls the function with the value.
+
+### List Operators
+- `map :: (a -> b) -> [a] -> [b]`
+- `(++) :: [a] -> [a] -> [a]`
+  - List appending. If the first list is not finite, the result is the first list. This function takes linear time in the number of elements of the first list.
+- `filter :: (a -> Bool) -> [a] -> [a]`
+- `null :: Foldable t => t a -> Bool`
+  - Test if empty.
+- `length :: Foldable t => t a -> Int`
+- `reverse :: [a] -> [a]`
+  - The list must be finite.
+
+### Special Folds
+- `and :: Foldable t => t Bool -> Bool`
+- `or :: Foldable t => t Bool -> Bool`
+- `any :: Foldable t => (a -> Bool) -> t a -> Bool`
+- `all :: Foldable t => (a -> Bool) -> t a -> Bool`
+- `concat :: Foldable t => t [a] -> [a]`
+- `concatMap :: Foldable t => (a -> [b]) -> t a -> [b]`
   
+### Building Lists
+- `scanl :: (b -> a -> b) -> b -> [a] -> [b]`
+  - Similar to foldl; ```scanl f z [x1, x2, ...] == [z, z `f` x1, (z `f` x1) `f` x2, ...]```
+- `scanl1 :: (a -> a -> a) -> [a] -> [a]`
+  - The `scanl` with no starting value.
+- `scanr :: (a -> b -> b) -> b -> [a] -> [b]`
+  - The right-to-left dual of the `scanl`.
+- `scanr1 :: (a -> a -> a) -> [a] -> [a]`
+  - A variant of `scanr` with no starting value.
+
+### Infinite Lists
+- `iterate :: (a -> a) -> [a] -> [a]`
+- `repeat :: a -> [a]`
+- `replicate :: n -> a -> [a]`
+- `cycle :: HasCallStack => [a] -> [a]`
+  - Ties a finite list into a circular one. 
+  - Partial; will raise an exception on an empty argument.
+ 
+### Sub-lists
+- `take :: Int -> [a] -> [a]`
+- `drop :: Int -> [a] -> [a]`
+- `takeWhile :: (a -> Bool) -> [a] -> [a]`
+- `dropWhile :: (a -> Bool) -> [a] -> [a]`
+- `span :: (a -> Bool) -> [a] -> ([a], [a])`
+  - The `span` applied to a predicate p and a list xs returns a tuple where the first element is the longest prefix (possibly empty) of xs of elements that satisfy p and the second element is the remainder of the list.
+- `break :: (a -> Bool) -> [a] -> ([a], [a])`
+  - The logical opponent of the `span`.
+- `splitAt :: Int -> [a] -> ([a], [a])`
+
+### Searching Lists
+- `notElem :: (Foldable t, Eq a) => a -> t a -> Bool -- infix 4`
+  - The negation of `elem`.
+- `lookUp :: Eq a => a -> [(a, b)] -> Maybe b`
+
+### Zipping and Unzipping
+- `zip :: [a] -> [b] -> [(a, b)]`
+  - Truncated to the shorter list.
+- `zip3 :: [a] -> [b] -> [c] -> [(a, b, c)]`
+- `zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]`
+- `zipWith3 :: (a -> b -> c -> d) -> [a] -> [b] -> [c] -> [d]`
+- `unzip :: [(a, b)] -> ([a], [b])`
+- `unzip3 :: [(a, b, c)] -> ([a], [b], [c])`
+  
+### Functions on Strings
+- `lines :: String -> [String]`
+- `words :: String -> [String]`
+- `unLines :: [String] -> String`
+- `unWords :: [String] -> String`
+  
+### Converting to and from Strings
+- `type ShowS = String -> String`
+  - The `shows` functions return a function that prepends the output `String` to an existing `String`. This allows constant-time concatenation of results using function composition.
+- ```haskell
+  class Show a where
+    -- showsPrec or
+    show :: a -> String
+  ```
+- `shows :: Show a => a -> ShowS`
+- `showChar :: Char -> ShowS`
+- `showString :: String -> ShowS`
+- `showParen :: Bool -> ShowS -> ShowS`
+- `type ReadS a = String -> [(a, String)]`
+  - A parser for a type `a`.
+- ```haskell
+  class Read a where
+    -- readsPrec or readPrec
+  ```
+- `reads :: Read a -> ReadS a`
+- `readParen :: Bool -> ReadS a -> ReadS a`
+  - `readParen` True p parses what p parses, but surrounded with parentheses. `readParen` False p parses what p parses, but optionally surrounded with parentheses.
+- `read :: Read a => String -> a`
+  - Partial; will fail with `error` if parsing is unsuccessful; use `readMaybe` instead.
+- `lex :: ReadS String`
+
+
+
 ## Total and Partial Functions
 One could think of a polymorphic type; `[a] -> a`. For example, the `head` function returning the first element of the input list has a such type. What happens when `[]` comes in as input? It crashes. Nothing else it could do. There is no way to make up a value of arbitrary type out of air.
 
@@ -256,6 +409,7 @@ The `head` is known as a *partial function*; there are certain inputs for which 
 It is good Haskell practice to avoid the use of *partial functions* as much as possible. It is good practice to avoid *partial functions* for any programming language; Though it is ridiculously annoying. Haskell tends to make it quite easy and sensible. 
 
 The `head` is a mistake, It should not be in the `Prelude`. There are some other functions one should almost never use; `tail`, `init`, `last`, and `(!!)` 
+
 
 ### Replacing Partial Functions
 Often partial functions could be replaced by pattern-matching.
@@ -276,7 +430,7 @@ doStuff2 (x1 : x2 : _) = x1 + x2
 ### Writing Partial Functions
 What should one do if one finds writing partial functions? There are two approaches;
 1. Indicate possible failure
-2. Refelct gurantees on types
+2. Reflect gurantees on types
 
 ```haskell
 safeHead :: [a] -> Maybe a
@@ -287,11 +441,11 @@ safeHead (x:_) = Just x
 This is a good idea because:
 1. The `safeHead` will never crash.
 2. The type of `safeHead` makes it obvious that it may fail for some inputs.
-3. The type system ensures the programmer to check the return value of `safeHead` to check if it is `Nothing`. 
+3. The type system ensures the programmer checks the return value of `safeHead` to check if it is `Nothing`. 
 
-In some sense, the function is still 'partial', but the partiality is reflected on the type, which is safe.
+In some sense, the function is still 'partial', but the partiality is reflected in the type, which is safe.
 
-What if one will only use a partial function in situations *guaranteed* to have 'safe' inputs. In these case, makes it returns failable types and dealing with cases which one knows never happens would be really annoying.
+What if one will only use a partial function in situations *guaranteed* to have 'safe' inputs? In these cases, making it returns failable types and dealing with cases that one knows will never happen would be annoying.
 
 If some condition is really guaranteed, then the types ought to reflect the guarantee! Then the compiler can enforce your guarantees for you. 
 

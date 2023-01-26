@@ -399,6 +399,34 @@ The `Prelude` is a module with many standard definitions which get implicitly im
   - Partial; will fail with `error` if parsing is unsuccessful; use `readMaybe` instead.
 - `lex :: ReadS String`
 
+### Basic Inputs and Outputs
+- `data IO a`
+  
+### Simple IO Operators
+- `putChar :: Char -> IO ()`
+- `putStr :: Char -> IO ()`
+- `putStrLn :: Char -> IO ()`
+- `print :: Show a => a -> IO ()`
+- `getChar :: IO Char`
+- `getLine :: IO String`
+- `getContents :: IO String`
+  - Get all user input in a `String`.
+- `interact :: (String -> String) -> IO ()`
+  - The entire input from stdin is passed to the function and the result will be printed on the stdout.
+  
+### File Path
+- `type FilePath = String`
+- `readFile :: FilePath -> IO String`
+- `writeFile :: FilePath -> String -> IO ()`
+- `appendFile :: FilePath -> String -> IO ()`
+- `readIO :: Read a => String -> IO a`
+- `readLn :: Read a => String -> IO a`
+
+### Exception Handling on IO Monad
+- `type IOError :: IOException`
+- `ioError :: IOError -> IO a`
+- `userError :: String -> IOError`
+
 
 
 ## Total and Partial Functions

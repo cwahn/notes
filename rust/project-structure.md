@@ -79,7 +79,7 @@ A module is by default, private from its parent module. One should make the modu
 One could use the `use` keyword to reduce repetition; i.e. `use crate::<module-name>::<sub-module>:: ... ::<item>` first, and just `<item>`.  
 
 ## Note
-A crate could have mulitple executables, but only one library. In case one prefer the multiple library concept, consider workspaces.
+A crate could have multiple executables, but only one library. In case one prefers the multiple library concept, consider workspaces.
 
 ## Reference
 [^1]: https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html

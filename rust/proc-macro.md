@@ -3,6 +3,9 @@
   - [The `proc-macro` crate](#the-proc-macro-crate)
   - [Procedural Macro Hygiene](#procedural-macro-hygiene)
   - [Function-like Procedural Macro](#function-like-procedural-macro)
+  - [Relate Crates](#relate-crates)
+    - [`syn`](#syn)
+    - [`quote`](#quote)
   - [References](#references)
 
 Procedural macro comes in one of three forms;
@@ -28,6 +31,13 @@ A macro author should make macros work as may context as possible by for example
 
 ## Function-like Procedural Macro
 Function-like procedural macro is called by using macro invocation operator `!`. These macros are defined as a public function with the `proc_macro` attribute and a signature of `(TokenStream) -> TokenStream`. 
+
+## Relate Crates
+### `syn`
+`parse :: tokens -> syntex tree`
+
+### `quote`
+`quote! :: syntex tree -> tokens` 
 
 ## References
 - https://doc.rust-lang.org/reference/procedural-macros.html

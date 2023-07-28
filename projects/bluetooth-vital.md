@@ -48,9 +48,9 @@ One could activate a project by opening a project directory with VS code.
 - Error on initial build; 
   ```
   fatal: not a git repository (or any of the parent directories): .git
-  ``` 
+  ```
   - Does it have to be .git repository?
-Maybe the message below is relevent.
+    Maybe the message below is relevent.
     ```
     ModuleNotFoundError: No module named 'chardet'
     ```
@@ -65,7 +65,7 @@ Maybe the message below is relevent.
         ```
         // CMakeLists.txt
         component_compile_options(-Wno-error=format= -Wno-format)
-        ``` 
+        ```
 - Upload port does not exist error
   - Specify upload port manually at `platformio.ini`.
     ```
@@ -79,14 +79,14 @@ Maybe the message below is relevent.
     extern "C"
     {
     #endif
-
+  
         constexpr char *main_tag = "app_main";
-
+  
         void app_main(void)
         {
             ...
         }
-
+  
     #ifdef __cplusplus
     }
     #endif      
@@ -287,7 +287,7 @@ Set of services. Predefined standard services have some essential services. And 
       - ESP_GATTS_DISCONNECT_EVT
         - `hidd_clcb_dealloc(param->disconnect.conn_id);` Not sure what this is
       - ESP_GATTS_CLOSE_EVT
-        - Do noting
+        - Do nothing
       - ESP_GATTS_WRITE_EVT
         - Calls another event, `ESP_HIDD_EVENT_BLE_LED_REPORT_WRITE_EVT`
       - ESP_GATTS_CREAT_ATTR_TAB_EVT
@@ -368,8 +368,8 @@ Set of services. Predefined standard services have some essential services. And 
     - ESP_GATTS_START_EVT
     - ESP_GAP_BLE_ADV_START_COMPLETE_EVT
     - ESP_GATTS_START_EVT
-The ported version doesn't emit ESP_GATTS_START_EVT.
-Actually not responding to it
+    The ported version doesn't emit ESP_GATTS_START_EVT.
+    Actually not responding to it
     - `gatts_profile_event_handler` doing nothing Okay, another source also does nothing on this event, when does it evoke?
     - [Documentation](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/bluetooth/esp_gatts.html?highlight=esp_gatts_start_evt#_CPPv4N20esp_gatts_cb_event_t19ESP_GATTS_START_EVTE) says when starting service is completed
       - What strats service then?
@@ -382,26 +382,26 @@ Actually not responding to it
     - Per [this](https://github.com/espressif/esp-idf/blob/master/examples/bluetooth/bluedroid/ble/gatt_server_service_table/tutorial/Gatt_Server_Service_Table_Example_Walkthrough.md) guide, maybe `esp_ble_gatts_app_register(ESP_HEART_RATE_APP_ID);` this call is missing.
         ```
         esp_err_t hidd_status;
-
+        
         // * How does this setup GATT callback?
-
+        
         if(callbacks != NULL) {
             hidd_le_env.hidd_cb = callbacks;
         } else {
             return ESP_FAIL;
         }
-
+        
         // * This function actually register the callback from global variable hidd_le_env
         if((hidd_status = hidd_register_cb()) != ESP_OK) {
             return hidd_status;
         }
-
+        
         esp_ble_gatts_app_register(BATTRAY_APP_ID);
-
+        
         if((hidd_status = esp_ble_gatts_app_register(HIDD_APP_ID)) != ESP_OK) {
             return hidd_status;
         }
-
+        
         return hidd_status;
         ```
     - Okay after the registration of callback function, it does call the `esp_ble_gatts_app_register` function twice.
@@ -412,7 +412,7 @@ Actually not responding to it
     - There might be pre defined app ids.
         ```
         #define HIDD_APP_ID			0x1812//ATT_SVC_HID
-
+        
         #define BATTRAY_APP_ID       0x180f
         ```
     - Okay, now it works with `esp_ble_gatts_app_register` call.
@@ -535,11 +535,11 @@ Actually not responding to it
       - This is the way how!
         ```
         #include <iostream>
-
+        
         using LambdaFunction = void(*)(int);
-
+        
         static LambdaFunction lambdaFunction = nullptr;
-
+        
         void staticFunction() {
             
             if (lambdaFunction) {
@@ -548,16 +548,16 @@ Actually not responding to it
                 std::cout << "Nil" << std::endl;
             }
         }
-
+        
         int main() {
             staticFunction();  // Nil
-
+        
             lambdaFunction = [](int x) {
                 std::cout << x << std::endl;
             };
             
             staticFunction();  // 42
-
+        
             return 0;
         }
         ```
@@ -565,19 +565,19 @@ Actually not responding to it
         ```
         #include <iostream>
         #include <vector>
-
+        
         struct Lambda {
             template<typename Tret, typename T>
             static Tret lambda_ptr_exec(void* data) {
                 return (Tret) (*(T*)fn<T>())(data);
             }
-
+        
             template<typename Tret = void, typename Tfp = Tret(*)(void*), typename T>
             static Tfp ptr(T& t) {
                 fn<T>(&t);
                 return (Tfp) lambda_ptr_exec<Tret, T>;
             }
-
+        
             template<typename T>
             static void* fn(void* new_fn = nullptr) {
                 static void* fn;
@@ -586,9 +586,9 @@ Actually not responding to it
                 return fn;
             }
         };
-
+        
         static void(*inner_function)(void *)  = nullptr;
-
+        
         static void outer_function()
         {
             if (inner_function != nullptr)
@@ -599,7 +599,7 @@ Actually not responding to it
 
 
         int main() {
-
+    
             int a = 100;
             auto b = [&](void*) {return ++a;};
             
@@ -641,6 +641,291 @@ Actually not responding to it
           - As `gatts_if`.
       - There has to be a list of (gatt_if, conn_id) with the length of profiles.
         - Which could be StaticArray.
+      - Side-effect callback crashes.
+        - Is it the callback call itself? Or the access to the capture?
+          - It is the access to external referenced variables. 
+        - How about read-only access?
+          - I does not work either.
+        - How about access with pointer with copy capture?
+          - This works.     
+        - It might be because the main function returns and the reference becomes invalid. The pointer approach works because accessing an invalid pointer is undefined behavior. Is it?
+          - Per [this](https://news.ycombinator.com/item?id=34627103) thread, Dereferencing the invalid pointer is unspecified behavior.
+          - It is also, undefined behavior to do referencing an invalid reference.
+          - Does the main function return, and local objects get destroyed?
+            - The main function of ESP-IDF does return before the tasks.
+            - This was the case. Problem solved.
+        - Now what makes the connection with the PC fail early?
+          - Check What is the last event? What is the difference?
+          - `ESP_GATTS_CONNECT_EVT`
+            - `esp_ble_set_encryption(param->connect.remote_bda, ESP_BLE_SEC_ENCRYPT_NO_MITM);`
+            - Save connection id from `param->connect.conn_id;`
+          - `ESP_GATTS_MTU_EVT`
+            - Save MTU if needed from `param->mtu.mtu`.
+          - `ESP_GAP_BLE_KEY_EVT`
+            - Nothing but report the security key with `ESP_LOGI(GATTC_TAG, "key type = %s", esp_key_type_to_str(param->ble_security.ble_key.key_type));`.
+          - `ESP_GAP_BLE_AUTH_CMPL_EVT`
+            - Already done.
+            ```
+            I (0) cpu_start: Starting scheduler on APP CPU.
+            I (565) BTDM_INIT: BT controller compile version [ad2b7cd]
+            I (565) system_api: Base MAC address is not set
+            I (565) system_api: read default base MAC address from EFUSE
+            I (575) phy_init: phy_version 4670,719f9f6,Feb 18 2021,17:07:07
+            I (1035) gatt_event: ESP_GATTS_REG_EVT
+            I (1045) gatt_event: ESP_GATTS_REG_EVT
+            W (1045) BT_BTM: BTM_BleWriteAdvData, Partial data write into ADV
+            I (1055) gatt_event: ESP_GATTS_CREAT_ATTR_TAB_EVT
+            I (1055) HID_LE_PRF: esp_hidd_prf_cb_hdl(), start added the hid service to the stack database. incl_handle = 40
+            I (1065) gap event: ESP_GAP_BLE_ADV_DATA_SET_COMPLETE_EVT
+            I (1075) gatt_event: ESP_GATTS_CREAT_ATTR_TAB_EVT
+            I (1075) HID_LE_PRF: hid svc handle = 2d
+            I (1075) gatt_event: ESP_GATTS_START_EVT
+            I (1095) gap event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+            I (1095) gatt_event: ESP_GATTS_START_EVT
+            I (97975) gatt_event: ESP_GATTS_CONNECT_EVT
+            I (97975) gatt_event: ESP_GATTS_CONNECT_EVT
+            I (97975) HID_LE_PRF: HID connection establish, conn_id = 0
+            I (97985) HID_DEMO: ESP_HIDD_EVENT_BLE_CONNECT
+            I (98065) gatt_event: ESP_GATTS_MTU_EVT
+            I (98065) gatt_event: ESP_GATTS_MTU_EVT
+            I (98395) gatt_event: ESP_GATTS_READ_EVT
+            I (98455) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            I (98455) gatt_event: ESP_GATTS_READ_EVT
+            I (98725) gap event: ESP_GAP_BLE_KEY_EVT
+            I (98725) gap event: ESP_GAP_BLE_KEY_EVT
+            I (98745) gatt_event: ESP_GATTS_READ_EVT
+            I (98795) gap event: ESP_GAP_BLE_KEY_EVT
+            I (98815) gap event: ESP_GAP_BLE_KEY_EVT
+            I (98865) gap event: ESP_GAP_BLE_AUTH_CMPL_EVT
+            I (98865) HID_DEMO: remote BD_ADDR: f4d48877c323
+            I (98865) HID_DEMO: address type = 0
+            I (98865) HID_DEMO: pair status = success
+            I (98875) gatt_event: ESP_GATTS_READ_EVT
+            I (98875) gatt_event: ESP_GATTS_READ_EVT
+            I (98885) gatt_event: ESP_GATTS_READ_EVT
+            I (98905) gatt_event: ESP_GATTS_READ_EVT
+            I (98955) gatt_event: ESP_GATTS_WRITE_EVT
+            I (98975) gatt_event: ESP_GATTS_WRITE_EVT
+            I (99025) gatt_event: ESP_GATTS_WRITE_EVT
+            I (99055) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            I (99145) gatt_event: ESP_GATTS_WRITE_EVT
+            I (99175) gatt_event: ESP_GATTS_READ_EVT
+            I (100045) HID_DEMO: Send the volume
+            I (100045) gatt_event: ESP_GATTS_CONF_EVT
+            I (103045) gatt_event: ESP_GATTS_CONF_EVT
+            I (103045) gatt_event: ESP_GATTS_CONF_EVT
+            I (106045) gatt_event: ESP_GATTS_CONF_EVT
+            I (108045) HID_DEMO: Send the volume
+            I (108045) gatt_event: ESP_GATTS_CONF_EVT
+            W (109835) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x13
+            I (109835) gatt_event: ESP_GATTS_DISCONNECT_EVT
+            I (109835) gatt_event: ESP_GATTS_DISCONNECT_EVT
+            I (109845) HID_DEMO: ESP_HIDD_EVENT_BLE_DISCONNECT
+            I (109865) gap event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+            I (110365) gatt_event: ESP_GATTS_CONNECT_EVT
+            I (110365) gatt_event: ESP_GATTS_CONNECT_EVT
+            I (110365) HID_LE_PRF: HID connection establish, conn_id = 0
+            I (110375) HID_DEMO: ESP_HIDD_EVENT_BLE_CONNECT
+            I (110475) gap event: ESP_GAP_BLE_AUTH_CMPL_EVT
+            I (110475) HID_DEMO: remote BD_ADDR: f4d48877c323
+            I (110475) HID_DEMO: address type = 0
+            I (110475) HID_DEMO: pair status = success
+            I (110525) gatt_event: ESP_GATTS_MTU_EVT
+            I (110535) gatt_event: ESP_GATTS_MTU_EVT
+            I (110605) gatt_event: ESP_GATTS_WRITE_EVT
+            I (110635) gatt_event: ESP_GATTS_WRITE_EVT
+            I (110665) gatt_event: ESP_GATTS_WRITE_EVT
+            I (110695) gatt_event: ESP_GATTS_WRITE_EVT
+            I (110725) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            I (110725) gatt_event: ESP_GATTS_READ_EVT
+            I (110875) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            I (111045) gatt_event: ESP_GATTS_CONF_EVT
+            I (111045) gatt_event: ESP_GATTS_CONF_EVT
+            W (113705) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x13
+            I (113705) gatt_event: ESP_GATTS_DISCONNECT_EVT
+            I (113705) gatt_event: ESP_GATTS_DISCONNECT_EVT
+            I (113715) HID_DEMO: ESP_HIDD_EVENT_BLE_DISCONNECT
+            I (113735) gap event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+            I (113905) gatt_event: ESP_GATTS_CONNECT_EVT
+            I (113905) gatt_event: ESP_GATTS_CONNECT_EVT
+            I (113905) HID_LE_PRF: HID connection establish, conn_id = 0
+            I (113905) HID_DEMO: ESP_HIDD_EVENT_BLE_CONNECT
+            I (114025) gap event: ESP_GAP_BLE_AUTH_CMPL_EVT
+            I (114025) HID_DEMO: remote BD_ADDR: f4d48877c323
+            I (114025) HID_DEMO: address type = 0
+            I (114035) HID_DEMO: pair status = success
+            I (114045) gatt_event: ESP_GATTS_CONF_EVT
+            I (114085) gatt_event: ESP_GATTS_MTU_EVT
+            I (114085) gatt_event: ESP_GATTS_MTU_EVT
+            I (114155) gatt_event: ESP_GATTS_WRITE_EVT
+            I (114185) gatt_event: ESP_GATTS_WRITE_EVT
+            I (114245) gatt_event: ESP_GATTS_WRITE_EVT
+            I (114275) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            I (114295) gatt_event: ESP_GATTS_WRITE_EVT
+            I (114335) gatt_event: ESP_GATTS_READ_EVT
+            I (114465) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            W (114935) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x13
+            I (114935) gatt_event: ESP_GATTS_DISCONNECT_EVT
+            I (114935) gatt_event: ESP_GATTS_DISCONNECT_EVT
+            I (114945) HID_DEMO: ESP_HIDD_EVENT_BLE_DISCONNECT
+            I (114965) gap event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+            I (115675) gatt_event: ESP_GATTS_CONNECT_EVT
+            I (115675) gatt_event: ESP_GATTS_CONNECT_EVT
+            I (115675) HID_LE_PRF: HID connection establish, conn_id = 0
+            I (115685) HID_DEMO: ESP_HIDD_EVENT_BLE_CONNECT
+            I (115815) gap event: ESP_GAP_BLE_AUTH_CMPL_EVT
+            I (115815) HID_DEMO: remote BD_ADDR: f4d48877c323
+            I (115815) HID_DEMO: address type = 0
+            I (115815) HID_DEMO: pair status = success
+            I (115865) gatt_event: ESP_GATTS_MTU_EVT
+            I (115875) gatt_event: ESP_GATTS_MTU_EVT
+            I (115975) gatt_event: ESP_GATTS_WRITE_EVT
+            I (116005) gatt_event: ESP_GATTS_WRITE_EVT
+            I (116035) gatt_event: ESP_GATTS_WRITE_EVT
+            I (116045) HID_DEMO: Send the volume
+            I (116045) gatt_event: ESP_GATTS_CONF_EVT
+            I (116065) gatt_event: ESP_GATTS_WRITE_EVT
+            I (116085) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            I (116105) gatt_event: ESP_GATTS_READ_EVT
+            I (116255) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            W (118245) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x13
+            I (118255) gatt_event: ESP_GATTS_DISCONNECT_EVT
+            I (118255) gatt_event: ESP_GATTS_DISCONNECT_EVT
+            I (118255) HID_DEMO: ESP_HIDD_EVENT_BLE_DISCONNECT
+            I (118275) gap event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+            W (119045) BT_LOG: esp_ble_gatts_send_indicate, The connection not created.
+            W (119045) BT_LOG: esp_ble_gatts_send_indicate, The connection not created.
+            W (122045) BT_LOG: esp_ble_gatts_send_indicate, The connection not created.
+    
+            ```
+        - Maybe this is because of the device type or service content.
+          - Change the icon to `ESP_BLE_APPEARANCE_GENERIC_HID`
+            - Does not worl
+          - Add HIDD service to profile so that the computer recognize useful service?
+            - Maybe some things are wrong with the attribute table. Maybe the length is zero.
+            -  Okay, It seems there are some kinds of memory error.
+               -  Let's make it minimal and check if structural problem.
+            -  It seems the problem is related with `esp_gatts_incl_svc_desc_t incl_svc = {0};`
+            ```
+            I (1049) app_main: BLE initialized
+            I (1049) ble_gap_event: ESP_GAP_BLE_ADV_DATA_SET_COMPLETE_EVT
+            I (1059) app_main: Returning app_main
+            I (1069) ble_gap_event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+            I (40299) ble_gatt_event: ESP_GATTS_CONNECT_EVT, (GATTs_if: 3)
+            I (40479) ble_gatt_event: ESP_GATTS_MTU_EVT, (GATTs_if: 3)
+            E (40899) BT_BTM: btm_ble_remove_resolving_list_entry_complete remove resolving list error 0x2
+            I (41609) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+            I (41609) ble: key type = ESP_LE_KEY_LENC
+            I (41609) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+            I (41619) ble: key type = ESP_LE_KEY_LID
+            I (41919) ble_gap_event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            I (42039) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+            I (42039) ble: key type = ESP_LE_KEY_PENC
+            I (42279) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+            I (42279) ble: key type = ESP_LE_KEY_PID
+            I (42399) ble_gap_event: ESP_GAP_BLE_AUTH_CMPL_EVT
+            I (42399) ble: remote BD_ADDR: f4d48877c323
+            I (42399) ble: address type = 0
+            I (42399) ble: pair status = success
+            I (42409) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+            I (42529) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+            W (47059) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x8
+            I (47059) ble_gatt_event: ESP_GATTS_DISCONNECT_EVT, (GATTs_if: 3)
+            I (47069) ble_gap_event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+            ```
+            ```
+            I (77089) ble_gap_event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            I (77259) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+            I (77279) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+            E (77309) BT_BTM: btm_ble_remove_resolving_list_entry_complete remove resolving list error 0x2
+            I (77309) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+            I (77329) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+            I (77349) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+            I (77459) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+            I (77459) ble: key type = ESP_LE_KEY_LENC
+            I (77459) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+            I (77459) ble: key type = ESP_LE_KEY_LID
+            I (77469) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+            I (77519) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+            I (77519) ble: key type = ESP_LE_KEY_PENC
+            I (77539) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+            I (77539) ble: key type = ESP_LE_KEY_PID
+            I (77619) ble_gap_event: ESP_GAP_BLE_AUTH_CMPL_EVT
+            I (77619) ble: remote BD_ADDR: f4d48877c323
+            I (77619) ble: address type = 0
+            I (77619) ble: pair status = success
+            I (77619) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+            I (77629) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+            I (77729) ble_gap_event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            I (77789) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+            I (77829) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+            lld_pdu_get_tx_flush_nb HCI packet count mismatch (0, 1)
+            W (85169) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x8
+            I (85179) ble_gatt_event: ESP_GATTS_DISCONNECT_EVT, (GATTs_if: 3)
+            I (85189) ble_gap_event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+            ```
+            ```
+            I (7159) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+            I (7179) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+            I (7189) ble_gap_event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            I (7229) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+            I (8029) ble_gap_event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            W (14949) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x8
+            I (14949) ble_gatt_event: ESP_GATTS_DISCONNECT_EVT, (GATTs_if: 3)
+            I (14969) ble_gap_event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+            I (29179) ble_gatt_event: ESP_GATTS_CONNECT_EVT, (GATTs_if: 3)
+            I (29509) ble_gap_event: ESP_GAP_BLE_AUTH_CMPL_EVT
+            I (29509) ble: remote BD_ADDR: f4d48877c323
+            I (29509) ble: address type = 0
+            I (29509) ble: pair status = success
+            I (29739) ble_gatt_event: ESP_GATTS_MTU_EVT, (GATTs_if: 3)
+            I (30189) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+            I (30609) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+            I (30659) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+            I (30689) ble_gap_event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+            I (30899) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+            I (31039) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+            W (39299) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x8
+            I (39299) ble_gatt_event: ESP_GATTS_DISCONNECT_EVT, (GATTs_if: 3)
+            I (39309) ble_gap_event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+            ```
+        - Maybe that read and write event could be the reason
+          - Need to figure out exactly what does it trying to read and write.
+          - Make the function to report param detail.
+          - Paramerter type
+            ```
+            /**
+            * @brief ESP_GATTS_READ_EVT
+            */
+            struct gatts_read_evt_param {
+                uint16_t conn_id;               /*!< Connection id */
+                uint32_t trans_id;              /*!< Transfer id */
+                esp_bd_addr_t bda;              /*!< The bluetooth device address which been read */
+                uint16_t handle;                /*!< The attribute handle */
+                uint16_t offset;                /*!< Offset of the value, if the value is too long */
+                bool is_long;                   /*!< The value is too long or not */
+                bool need_rsp;                  /*!< The read operation need to do response */
+            } read;                             /*!< Gatt server callback param of ESP_GATTS_READ_EVT */
+
+
+            /**
+            * @brief ESP_GATTS_WRITE_EVT
+            */
+            struct gatts_write_evt_param {
+                uint16_t conn_id;               /*!< Connection id */
+                uint32_t trans_id;              /*!< Transfer id */
+                esp_bd_addr_t bda;              /*!< The bluetooth device address which been written */
+                uint16_t handle;                /*!< The attribute handle */
+                uint16_t offset;                /*!< Offset of the value, if the value is too long */
+                bool need_rsp;                  /*!< The write operation need to do response */
+                bool is_prep;                   /*!< This write operation is prepare write */
+                uint16_t len;                   /*!< The write attribute value length */
+                uint8_t *value;                 /*!< The write attribute value */
+            } write;                            /*!< Gatt server callback param of ESP_GATTS_WRITE_EVT */
+            ```
+    
+    - Also need to support the include service.
+      - WIP
 
 
   - Incremental numbers
@@ -650,7 +935,101 @@ Actually not responding to it
     - The way how to enable BLE long read with ESP-IDF BLE stack is [here](https://sankalpb.github.io/bluetooth-lowenergy/embedded/2019/03/15/BLE-long-read-on-esp32.html).
     - How could I generate a custom service and characteristic?
       - When one creates a custom service or characteristic, it will show up on the client device as an unknown service / characteristic per [this](https://esp32.com/viewtopic.php?t=12855) comment.
-    - 
+  - SimpleBLE connection issue
+    - Maybe related with [this](https://www.reddit.com/r/iOSProgramming/comments/j1ahve/ios_bluetooth_issue_code14_peer_removed_pairing/)
+    - I also struggled with this issue. I ended up adding an alert dialog to notify the user to remove the Bluetooth device from the settings menu. Not an ideal or user friendly solution.  
+    The change seems to have happened in iOS 13.3, as I have devices running iOS 13.2 and older, and the peer removed pairing information error does not happen.
+    On Android you can remove the BLE device using reflection, so you do not need to have the user manually remove the peripheral.
+    - Maybe need to forget the Bluetooth device.
+    - Is there any way to communicate with already connected device?
+      - No
+  - Does data of profile will get referenced at every read event?
+    - Seems not
+        ```
+        auto gap_callback = [=](esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *param) {};
+
+            TestService::test_value = 4;
+
+            Ble ble{profiles, to_function_pointer(gap_callback)};
+
+            TestService::test_value = 5;
+        ```
+    - The response is static 4.
+    - Does the value get copied?
+      - If it is the case, it seems it is somewhere around `esp_ble_gatts_start_service`` call.
+ESP-IDF GitHub [issue](https://github.com/espressif/esp-idf/issues/11931) opened.
+  - Manual response
+    - A response should be the type of `esp_gatt_rsp_t``. which is defined like,
+      ```
+      /// Gatt attribute value
+        typedef struct {
+            uint8_t           value[ESP_GATT_MAX_ATTR_LEN];         /*!< Gatt attribute value */
+            uint16_t          handle;                               /*!< Gatt attribute handle */
+            uint16_t          offset;                               /*!< Gatt attribute value offset */
+            uint16_t          len;                                  /*!< Gatt attribute value length */
+            uint8_t           auth_req;                             /*!< Gatt authentication request */
+        } esp_gatt_value_t;
+
+        /// GATT remote read request response type
+        typedef union {
+            esp_gatt_value_t attr_value;                            /*!< Gatt attribute structure */
+            uint16_t            handle;                             /*!< Gatt attribute handle */
+        } esp_gatt_rsp_t;
+
+      ```
+    - How should the callback distinguish which request is for which request when the service handle is auto-generated from the stack? Should it be stored somewhere?
+      - How did the reference source solve this issue?
+        ```
+            case ESP_GATTS_READ_EVT: {
+            UINT32 trans_id = p_data->req_data.trans_id;
+            UINT16 conn_id = p_data->req_data.conn_id;
+            UINT16 handle = p_data->req_data.p_data->read_req.handle;
+            bool   is_long = p_data->req_data.p_data->read_req.is_long;
+            BTC_TRACE_ERROR("read request:event=0x%x,handle=0x%x,trans_id=0x%x,conn_id=0x%x\n",
+                    event, handle, trans_id, conn_id);
+
+            if (dis_valid_handle_range(handle)) {
+                tGATT_VALUE p_value;
+                p_value.handle = handle;
+                p_value.conn_id = conn_id;
+                p_value.offset = p_data->req_data.p_data->read_req.offset;
+                dis_s_read_attr_value(p_data->req_data.p_data, &p_value, trans_id, conn_id);
+            } else {
+                bas_s_read_attr_value(p_data->req_data.p_data, trans_id, conn_id);
+            }
+        }
+        break;
+        ```
+        -  It works something like this.
+        -  Is it guaranteed that the consecutive attributes are assigned to consecutive handles?
+           -  Yes it does. It actually generated at the creation of the table.
+              ```
+                /**
+                * @brief ESP_GATTS_CREAT_ATTR_TAB_EVT
+                */
+                struct gatts_add_attr_tab_evt_param{
+                    esp_gatt_status_t status;       /*!< Operation status */
+                    esp_bt_uuid_t svc_uuid;         /*!< Service uuid type */
+                    uint8_t svc_inst_id;            /*!< Service id */
+                    uint16_t num_handle;            /*!< The number of the attribute handle to be added to the gatts database */
+                    uint16_t *handles;              /*!< The number to the handles */
+                } add_attr_tab;                     /*!< Gatt server callback param of ESP_GATTS_CREAT_ATTR_TAB_EVT */
+              ```
+            - Need to save this to instance for response.
+            - How to identify two same service if distinguish service by uuid?
+              - A [post](https://devzone.nordicsemi.com/f/nordic-q-a/9440/multiple-identical-services-in-gatt-table) in nordic forum suggest using additional characteristics.
+              - Per [this](https://github.com/nkolban/esp32-snippets/issues/532) issue multiple services with the same UUID may not work properly and imperfect function.
+              - [This](https://github.com/hbldh/bleak/issues/362) issue reference a SIG spec allowing multiiple service with the same UUIDs.
+              - [This](https://stackoverflow.com/questions/32443257/ble-device-same-uuid-for-multiple-services) stack overflow answer says it should be allowed, and those service should be distinguished by handles.
+              - Leave this as future work. For now assume unique UUID in a profile. 
+                - Device wide, two different profile could have two identical service. Can't distinguish this. 
+                - In a profile, two different service may have the same UUIDs but could not be the same. (Is two identical service allowed?)
+                - For now, assume that the service UUID is unique device wide.
+       - External callback issue
+         - Which callback send response?
+           - External callback send the value
+         - `I (14486) gatts_event: ESP_GATTS_DISCONNECT_EVT | conn_id 0, remote_bda 1073514146, reason 19`
+           - The reason is disconnected by peer.
 
 
   - Number buffer

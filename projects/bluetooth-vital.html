@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Bluetooth Vital Dev</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension zhuangtongfa.material-theme */
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body {
+  box-sizing: border-box;
+  min-width: 200px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote {
+  background-color: initial;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre {
+  color: initial;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body code, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body code, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body code, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body code {
+  color: inherit;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body pre code, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body pre code, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body pre code, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre code {
+  color: initial;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body code > div, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body code > div, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body code > div, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body code > div {
+  background: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body table th, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body table td, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body table th, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body table td, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body table th, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body table td, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table th, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table td {
+  border: 1px solid rgba(171, 178, 191, 0.5) !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body.showEditorSelection .code-active-line:before, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body.showEditorSelection .code-active-line:before, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body.showEditorSelection .code-active-line:before, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body.showEditorSelection .code-active-line:before {
+  border-left: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body.showEditorSelection .code-line:hover:before, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body.showEditorSelection .code-line:hover:before, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body.showEditorSelection .code-line:hover:before, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body.showEditorSelection .code-line:hover:before {
+  border-left: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body.showEditorSelection .code-line .code-line:hover:before, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body.showEditorSelection .code-line .code-line:hover:before, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body.showEditorSelection .code-line .code-line:hover:before, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body.showEditorSelection .code-line .code-line:hover:before {
+  border-left: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body p, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body dl, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body p, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body dl, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body p, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body dl, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body p, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body dl, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+/* Generated from 'node_modules/github-markdown-css/github-markdown.css' */
+@font-face {
+  font-family: octicons-link;
+  src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAZwABAAAAAACFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEU0lHAAAGaAAAAAgAAAAIAAAAAUdTVUIAAAZcAAAACgAAAAoAAQAAT1MvMgAAAyQAAABJAAAAYFYEU3RjbWFwAAADcAAAAEUAAACAAJThvmN2dCAAAATkAAAABAAAAAQAAAAAZnBnbQAAA7gAAACyAAABCUM+8IhnYXNwAAAGTAAAABAAAAAQABoAI2dseWYAAAFsAAABPAAAAZwcEq9taGVhZAAAAsgAAAA0AAAANgh4a91oaGVhAAADCAAAABoAAAAkCA8DRGhtdHgAAAL8AAAADAAAAAwGAACfbG9jYQAAAsAAAAAIAAAACABiATBtYXhwAAACqAAAABgAAAAgAA8ASm5hbWUAAAToAAABQgAAAlXu73sOcG9zdAAABiwAAAAeAAAAME3QpOBwcmVwAAAEbAAAAHYAAAB/aFGpk3jaTY6xa8JAGMW/O62BDi0tJLYQincXEypYIiGJjSgHniQ6umTsUEyLm5BV6NDBP8Tpts6F0v+k/0an2i+itHDw3v2+9+DBKTzsJNnWJNTgHEy4BgG3EMI9DCEDOGEXzDADU5hBKMIgNPZqoD3SilVaXZCER3/I7AtxEJLtzzuZfI+VVkprxTlXShWKb3TBecG11rwoNlmmn1P2WYcJczl32etSpKnziC7lQyWe1smVPy/Lt7Kc+0vWY/gAgIIEqAN9we0pwKXreiMasxvabDQMM4riO+qxM2ogwDGOZTXxwxDiycQIcoYFBLj5K3EIaSctAq2kTYiw+ymhce7vwM9jSqO8JyVd5RH9gyTt2+J/yUmYlIR0s04n6+7Vm1ozezUeLEaUjhaDSuXHwVRgvLJn1tQ7xiuVv/ocTRF42mNgZGBgYGbwZOBiAAFGJBIMAAizAFoAAABiAGIAznjaY2BkYGAA4in8zwXi+W2+MjCzMIDApSwvXzC97Z4Ig8N/BxYGZgcgl52BCSQKAA3jCV8CAABfAAAAAAQAAEB42mNgZGBg4f3vACQZQABIMjKgAmYAKEgBXgAAeNpjYGY6wTiBgZWBg2kmUxoDA4MPhGZMYzBi1AHygVLYQUCaawqDA4PChxhmh/8ODDEsvAwHgMKMIDnGL0x7gJQCAwMAJd4MFwAAAHjaY2BgYGaA4DAGRgYQkAHyGMF8NgYrIM3JIAGVYYDT+AEjAwuDFpBmA9KMDEwMCh9i/v8H8sH0/4dQc1iAmAkALaUKLgAAAHjaTY9LDsIgEIbtgqHUPpDi3gPoBVyRTmTddOmqTXThEXqrob2gQ1FjwpDvfwCBdmdXC5AVKFu3e5MfNFJ29KTQT48Ob9/lqYwOGZxeUelN2U2R6+cArgtCJpauW7UQBqnFkUsjAY/kOU1cP+DAgvxwn1chZDwUbd6CFimGXwzwF6tPbFIcjEl+vvmM/byA48e6tWrKArm4ZJlCbdsrxksL1AwWn/yBSJKpYbq8AXaaTb8AAHja28jAwOC00ZrBeQNDQOWO//sdBBgYGRiYWYAEELEwMTE4uzo5Zzo5b2BxdnFOcALxNjA6b2ByTswC8jYwg0VlNuoCTWAMqNzMzsoK1rEhNqByEyerg5PMJlYuVueETKcd/89uBpnpvIEVomeHLoMsAAe1Id4AAAAAAAB42oWQT07CQBTGv0JBhagk7HQzKxca2sJCE1hDt4QF+9JOS0nbaaYDCQfwCJ7Au3AHj+LO13FMmm6cl7785vven0kBjHCBhfpYuNa5Ph1c0e2Xu3jEvWG7UdPDLZ4N92nOm+EBXuAbHmIMSRMs+4aUEd4Nd3CHD8NdvOLTsA2GL8M9PODbcL+hD7C1xoaHeLJSEao0FEW14ckxC+TU8TxvsY6X0eLPmRhry2WVioLpkrbp84LLQPGI7c6sOiUzpWIWS5GzlSgUzzLBSikOPFTOXqly7rqx0Z1Q5BAIoZBSFihQYQOOBEdkCOgXTOHA07HAGjGWiIjaPZNW13/+lm6S9FT7rLHFJ6fQbkATOG1j2OFMucKJJsxIVfQORl+9Jyda6Sl1dUYhSCm1dyClfoeDve4qMYdLEbfqHf3O/AdDumsjAAB42mNgYoAAZQYjBmyAGYQZmdhL8zLdDEydARfoAqIAAAABAAMABwAKABMAB///AA8AAQAAAAAAAAAAAAAAAAABAAAAAA==) format("woff");
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  color: rgb(171, 178, 191);
+  line-height: 1.5;
+  word-wrap: break-word;
+  background: #282c34;
+  padding-top: 20px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-c, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-c, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-c, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-c {
+  color: #6a737d;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-c1, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-s .pl-v, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-c1, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-s .pl-v, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-c1, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-s .pl-v, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-c1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-s .pl-v {
+  color: #005cc5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-e, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-en, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-e, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-en, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-e, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-en, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-e, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-en {
+  color: #6f42c1;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-smi, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-s .pl-s1, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-smi, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-s .pl-s1, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-smi, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-s .pl-s1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-smi, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-s .pl-s1 {
+  color: #24292e;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-ent, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-ent, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-ent, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-ent {
+  color: #22863a;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-k, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-k, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-k, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-k {
+  color: #d73a49;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-s, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-pds, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-s .pl-pse .pl-s1, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-sr, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-sr .pl-cce, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-sr .pl-sre, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-sr .pl-sra, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-s, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-pds, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-s .pl-pse .pl-s1, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-sr, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-sr .pl-cce, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-sr .pl-sre, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-sr .pl-sra, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-s, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-pds, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-s .pl-pse .pl-s1, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-sr, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-sr .pl-cce, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-sr .pl-sre, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-sr .pl-sra, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-s, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-pds, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-s .pl-pse .pl-s1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-sr, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-sr .pl-cce, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-sr .pl-sre, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-sr .pl-sra {
+  color: #032f62;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-v, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-smw, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-v, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-smw, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-v, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-smw, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-v, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-smw {
+  color: #e36209;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-bu, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-bu, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-bu, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-bu {
+  color: #b31d28;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-ii, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-ii, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-ii, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-ii {
+  color: #fafbfc;
+  background-color: #b31d28;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-c2, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-c2, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-c2, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-c2 {
+  color: #fafbfc;
+  background-color: #d73a49;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-c2::before, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-c2::before, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-c2::before, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-c2::before {
+  content: "^M";
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-sr .pl-cce, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-sr .pl-cce, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-sr .pl-cce, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-sr .pl-cce {
+  font-weight: bold;
+  color: #22863a;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-ml, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-ml, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-ml, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-ml {
+  color: #735c0f;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-mh, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-mh .pl-en, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-ms, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-mh, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-mh .pl-en, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-ms, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-mh, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-mh .pl-en, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-ms, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mh, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mh .pl-en, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-ms {
+  font-weight: bold;
+  color: #005cc5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-mi, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-mi, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-mi, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mi {
+  font-style: italic;
+  color: #24292e;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-mb, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-mb, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-mb, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mb {
+  font-weight: bold;
+  color: #24292e;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-md, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-md, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-md, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-md {
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-mi1, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-mi1, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-mi1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mi1 {
+  color: #22863a;
+  background-color: #f0fff4;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-mc, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-mc, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-mc, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mc {
+  color: #e36209;
+  background-color: #ffebda;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-mi2, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-mi2, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-mi2, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mi2 {
+  color: #f6f8fa;
+  background-color: #005cc5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-mdr, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-mdr, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-mdr, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-mdr {
+  font-weight: bold;
+  color: #6f42c1;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-ba, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-ba, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-ba, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-ba {
+  color: #586069;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-sg, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-sg, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-sg, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-sg {
+  color: #959da5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-corl, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-corl, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-corl, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-corl {
+  text-decoration: underline;
+  color: #032f62;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .octicon, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .octicon, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .octicon, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .octicon {
+  display: inline-block;
+  vertical-align: text-top;
+  fill: currentColor;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body a, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body a, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body a, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body a {
+  background-color: transparent;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body a:active, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body a:hover, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body a:active, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body a:hover, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body a:active, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body a:hover, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body a:active, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body a:hover {
+  outline-width: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body strong, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body strong, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body strong, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body strong {
+  font-weight: inherit;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body strong, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body strong, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body strong, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body strong {
+  font-weight: bolder;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1 {
+  margin: 0.67em 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body img, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body img, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body img, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body img {
+  border-style: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body hr, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body hr, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body hr, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body input, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body input, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body input, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body input {
+  font: inherit;
+  margin: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body input, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body input, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body input, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body input {
+  overflow: visible;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body [type=checkbox], .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body [type=checkbox], .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body [type=checkbox], .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body *, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body *, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body *, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body * {
+  box-sizing: border-box;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body input, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body input, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body input, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body input {
+  font-family: inherit;
+  line-height: inherit;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body a, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body a, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body a, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body a {
+  color: #528bff;
+  text-decoration: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body a:hover, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body a:hover, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body a:hover, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body a:hover {
+  text-decoration: underline;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body strong, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body strong, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body strong, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body strong {
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body hr, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body hr, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body hr, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #dfe2e5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body hr::before, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body hr::before, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body hr::before, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body hr::before {
+  display: table;
+  content: "";
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body hr::after, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body hr::after, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body hr::after, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body hr::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body td, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body th, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body td, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body th, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body td, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body th, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body td, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body th {
+  padding: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h3, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h4, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h5, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h6, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h3, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h4, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h5, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h6, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h3, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h4, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h5, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h6, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h3, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h4, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h5, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1 {
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2 {
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h3, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h3, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h3, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h3 {
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h4, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h4, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h4, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h4 {
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h5, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h5, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h5, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h5 {
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h6, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h6, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h6, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6 {
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body p, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body p, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body p, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote {
+  margin: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul ol {
+  list-style-type: lower-roman;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ul ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ul ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ol ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ol ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ul ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ul ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ol ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ol ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ul ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ul ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ol ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ol ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body dd, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body dd, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body dd, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body dd {
+  margin-left: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .octicon, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .octicon, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .octicon, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .octicon {
+  vertical-align: text-bottom;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-0, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-0, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-0, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-0 {
+  padding-left: 0 !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-1, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-1, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-1 {
+  padding-left: 4px !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-2, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-2, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-2, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-2 {
+  padding-left: 8px !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-3, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-3, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-3, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-3 {
+  padding-left: 16px !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-4, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-4, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-4, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-4 {
+  padding-left: 24px !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-5, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-5, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-5, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-5 {
+  padding-left: 32px !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .pl-6, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .pl-6, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .pl-6, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .pl-6 {
+  padding-left: 40px !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body::before, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body::before, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body::before, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body::before {
+  display: table;
+  content: "";
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body::after, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body::after, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body::after, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body > *:first-child, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body > *:first-child, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body > *:first-child, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body > *:first-child {
+  margin-top: 0 !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body > *:last-child, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body > *:last-child, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body > *:last-child, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body > *:last-child {
+  margin-bottom: 0 !important;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body a:not([href]), .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body a:not([href]), .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body a:not([href]), .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .anchor {
+  float: left;
+  padding-right: 4px;
+  margin-left: -20px;
+  line-height: 1;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .anchor:focus, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .anchor:focus, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .anchor:focus, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .anchor:focus {
+  outline: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body p, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body dl, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body p, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body dl, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body p, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body dl, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body p, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body dl, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body hr, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body hr, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body hr, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: #e1e4e8;
+  border: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body blockquote, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote {
+  /* padding: 0 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5; */
+  padding: 8.5px 17px;
+  margin: 1.5em 0;
+  color: #7c879c;
+  border-color: #4b5362;
+  border-width: 4px;
+  border-left: 5px solid #4b5362;
+  background: transparent;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body blockquote > :first-child, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body blockquote > :first-child, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body blockquote > :first-child, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote > :first-child {
+  margin-top: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body blockquote > :last-child, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body blockquote > :last-child, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body blockquote > :last-child, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body blockquote > :last-child {
+  margin-bottom: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body kbd, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body kbd, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body kbd, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: solid 1px #c6cbd1;
+  border-bottom-color: #959da5;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #959da5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h3, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h4, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h5, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h6, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h3, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h4, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h5, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h6, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h3, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h4, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h5, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h6, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h3, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h4, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h5, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: rgb(240, 240, 240);
+  border-bottom: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h1 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h2 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h3 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h4 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h5 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h6 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h1 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h2 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h3 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h4 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h5 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h6 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h1 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h2 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h3 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h4 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h5 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h6 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h3 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h4 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h5 .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6 .octicon-link {
+  color: #1b1f23;
+  vertical-align: middle;
+  visibility: hidden;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h1:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h2:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h3:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h4:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h5:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h6:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h1:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h2:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h3:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h4:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h5:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h6:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h1:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h2:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h3:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h4:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h5:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h6:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h3:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h4:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h5:hover .anchor, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6:hover .anchor {
+  text-decoration: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h1:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h2:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h3:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h4:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h5:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h6:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h1:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h2:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h3:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h4:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h5:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h6:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h1:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h2:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h3:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h4:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h5:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h6:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h3:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h4:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h5:hover .anchor .octicon-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h1, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h1 {
+  padding-bottom: 0.3em;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h2, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h2 {
+  padding-bottom: 0.3em;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body h6, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body h6, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body h6, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body h6 {
+  color: #6a737d;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol {
+  padding-left: 2em;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ul ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body ol ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ul ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body ol ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ul ul, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body ol ul, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul ul, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ul ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol ol, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body li, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body li, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body li, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body li {
+  word-wrap: break-all;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body li > p, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body li > p, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body li > p, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body li > p {
+  margin-top: 16px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body li + li, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body li + li, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body li + li, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body li + li {
+  margin-top: 0.25em;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body dl, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body dl, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body dl, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body dl {
+  padding: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body dl dt, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body dl dt, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body dl dt, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-style: italic;
+  font-weight: 600;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body dl dd, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body dl dd, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body dl dd, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body table, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body table th, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body table th, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body table th, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table th {
+  font-weight: 700;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body table th, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body table td, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body table th, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body table td, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body table th, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body table td, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table th, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body table td {
+  padding: 6px 13px;
+  /* border: 1px solid #dfe2e5; */
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body img, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body img, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body img, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body img {
+  max-width: 100%;
+  box-sizing: content-box;
+  display: inline-block;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body img[align=right], .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body img[align=right], .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body img[align=right], .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body img[align=right] {
+  padding-left: 20px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body img[align=left], .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body img[align=left], .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body img[align=left], .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body img[align=left] {
+  padding-right: 20px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body code, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body code, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body code, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  background-color: #3a3f4b;
+  border-radius: 3px;
+  color: white;
+  margin: 0 1px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre {
+  word-wrap: normal;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body pre > code, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body pre > code, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body pre > code, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre > code {
+  padding: 0;
+  margin: 0;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .highlight, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .highlight, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .highlight, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .highlight {
+  margin-bottom: 16px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .highlight pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .highlight pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .highlight pre, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .highlight pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .highlight pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .highlight pre, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body pre, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .highlight pre, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre {
+  padding: 16px;
+  overflow: auto;
+  line-height: 1.45;
+  /* background-color: #f6f8fa; */
+  border-radius: 3px;
+  background-color: #31363f;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body pre code, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body pre code, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body pre code, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+  color: rgb(171, 178, 191);
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .full-commit .btn-outline:not(:disabled):hover, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .full-commit .btn-outline:not(:disabled):hover, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .full-commit .btn-outline:not(:disabled):hover, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .full-commit .btn-outline:not(:disabled):hover {
+  color: #005cc5;
+  border-color: #005cc5;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body kbd, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body kbd, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body kbd, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  line-height: 10px;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border: solid 1px #d1d5da;
+  border-bottom-color: #c6cbd1;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #c6cbd1;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body :checked + .radio-label, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body :checked + .radio-label, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body :checked + .radio-label, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body :checked + .radio-label {
+  position: relative;
+  z-index: 1;
+  border-color: #0366d6;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .task-list-item, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .task-list-item, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .task-list-item, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .task-list-item {
+  list-style-type: none;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .task-list-item + .task-list-item, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .task-list-item + .task-list-item, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .task-list-item + .task-list-item, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .task-list-item + .task-list-item {
+  margin-top: 3px;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body .task-list-item input, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body .task-list-item input, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body .task-list-item input, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body .task-list-item input {
+  margin: 0 0.2em 0.25em -1.6em;
+  vertical-align: middle;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"].vscode-body hr, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"].vscode-body hr, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"].vscode-body hr, .vscode-dark[data-vscode-theme-name="One Dark Pro"].vscode-body hr {
+  border-bottom-color: #eee;
+}
+
+/*
+
+Atom One Dark by Daniel Gamage
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+base:    #282c34
+mono-1:  #abb2bf
+mono-2:  #818896
+mono-3:  #5c6370
+hue-1:   #56b6c2
+hue-2:   #61aeee
+hue-3:   #c678dd
+hue-4:   #98c379
+hue-5:   #e06c75
+hue-5-2: #be5046
+hue-6:   #d19a66
+hue-6-2: #e6c07b
+
+*/
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs, .vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #abb2bf;
+  background: #282c34;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-comment,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-quote, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-comment,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-quote, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-comment,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-quote, .vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-comment,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-quote {
+  color: #5c6370;
+  font-style: italic;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-doctag,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-keyword,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-formula, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-doctag,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-keyword,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-formula, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-doctag,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-keyword,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-formula, .vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-doctag,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-keyword,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-formula {
+  color: #c678dd;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-section,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-name,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-selector-tag,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-deletion,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-subst, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-section,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-name,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-selector-tag,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-deletion,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-subst, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-section,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-name,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-selector-tag,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-deletion,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-subst, .vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-section,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-name,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-selector-tag,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-deletion,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-subst {
+  color: #e06c75;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-literal, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-literal, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-literal, .vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-literal {
+  color: #56b6c2;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-string,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-regexp,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-addition,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-attribute,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-meta-string, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-string,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-regexp,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-addition,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-attribute,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-meta-string, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-string,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-regexp,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-addition,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-attribute,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-meta-string, .vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-string,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-regexp,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-addition,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-attribute,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-meta-string {
+  color: #98c379;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-built_in,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-class .hljs-title, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-built_in,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-class .hljs-title, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-built_in,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-class .hljs-title, .vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-built_in,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-class .hljs-title {
+  color: #e6c07b;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-attr,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-variable,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-template-variable,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-type,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-selector-class,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-selector-attr,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-selector-pseudo,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-number, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-attr,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-variable,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-template-variable,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-type,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-selector-class,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-selector-attr,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-selector-pseudo,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-number, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-attr,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-variable,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-template-variable,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-type,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-selector-class,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-selector-attr,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-selector-pseudo,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-number, .vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-attr,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-variable,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-template-variable,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-type,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-selector-class,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-selector-attr,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-selector-pseudo,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-number {
+  color: #d19a66;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-symbol,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-bullet,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-link,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-meta,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-selector-id,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-title, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-symbol,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-bullet,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-link,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-meta,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-selector-id,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-title, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-symbol,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-bullet,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-link,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-meta,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-selector-id,
+.vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-title, .vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-symbol,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-bullet,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-link,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-meta,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-selector-id,
+.vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-title {
+  color: #61aeee;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-emphasis, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-emphasis, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-emphasis, .vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-emphasis {
+  font-style: italic;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-strong, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-strong, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-strong, .vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-strong {
+  font-weight: bold;
+}
+.vscode-dark[data-vscode-theme-name="One Dark Pro Mix"] .hljs-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Flat"] .hljs-link, .vscode-dark[data-vscode-theme-name="One Dark Pro Darker"] .hljs-link, .vscode-dark[data-vscode-theme-name="One Dark Pro"] .hljs-link {
+  text-decoration: underline;
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="bluetooth-vital-dev">Bluetooth Vital Dev</h1>
+<ul>
+<li><a href="#bluetooth-vital-dev">Bluetooth Vital Dev</a>
+<ul>
+<li><a href="#environment-setup">Environment Setup</a>
+<ul>
+<li><a href="#platformio">PlatformIO</a>
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#change-default-project-dir">Change Default Project Dir</a></li>
+<li><a href="#chardet-error">Chardet Error</a></li>
+<li><a href="#new-project">New Project</a></li>
+<li><a href="#issues">Issues</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#io">IO</a>
+<ul>
+<li><a href="#bluetooth-low-energy">Bluetooth Low Energy</a>
+<ul>
+<li><a href="#protocol-stack">Protocol Stack</a>
+<ul>
+<li><a href="#phy">PHY</a></li>
+<li><a href="#ll">LL</a></li>
+<li><a href="#gap">GAP</a></li>
+<li><a href="#gatt">GATT</a></li>
+<li><a href="#att">ATT</a></li>
+<li><a href="#profile">Profile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#implementation">Implementation</a></li>
+</ul>
+</li>
+<li><a href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="environment-setup">Environment Setup</h2>
+<p><a href="https://platformio.org">PlatformIO</a> seems good for IDE.</p>
+<h3 id="platformio">PlatformIO</h3>
+<h4 id="installation">Installation</h4>
+<p>Search PlatformIO at VSCode extension and install.</p>
+<h4 id="change-default-project-dir">Change Default Project Dir</h4>
+<p>Use the command below in pio CLI</p>
+<pre><code>pio settings set projects_dir &lt;DIR_PATH&gt;
+</code></pre>
+<h4 id="chardet-error">Chardet Error</h4>
+<p>If it fails to compile the ESP-IDF project manually install the package.</p>
+<pre><code>source /Users/chanwooahn/.platformio/penv/.espidf-5.0.2/bin/activate
+pip install chardet   
+</code></pre>
+<h4 id="new-project">New Project</h4>
+<p>A new project is to be started that platformIO home in VSCode. Will set up default directories structure and CMakeLists.</p>
+<p>One could activate a project by opening a project directory with VS code.</p>
+<h4 id="issues">Issues</h4>
+<ul>
+<li>
+<p>Error on initial build;</p>
+<pre><code>fatal: not a git repository (or any of the parent directories): .git
+</code></pre>
+<ul>
+<li>Does it have to be .git repository?
+Maybe the message below is relevent.<pre><code>ModuleNotFoundError: No module named 'chardet'
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Error not finding <code>esp_bt.h</code></p>
+<ul>
+<li>Run manuconfig with pio and enable bluetooth<pre><code>pio run -t menuconfig
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Formatting related error</p>
+<ul>
+<li>Maybe relevent <a href="https://github.com/espressif/esp-idf/issues/9511">issue</a>
+<ul>
+<li>Sugggest to silence the warning<pre><code>// CMakeLists.txt
+component_compile_options(-Wno-error=format= -Wno-format)
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Upload port does not exist error</p>
+<ul>
+<li>Specify upload port manually at <code>platformio.ini</code>.<pre><code>upload_port = /dev//dev/cu.SLAB_USBtoUART
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>C++ STL library linkage error</p>
+<ul>
+<li>Default main file is C, not C++. Need to change file with</li>
+<li>Also need extern C</li>
+</ul>
+<pre><code>#ifdef __cplusplus
+  extern &quot;C&quot;
+  {
+  #endif
+
+      constexpr char *main_tag = &quot;app_main&quot;;
+
+      void app_main(void)
+      {
+          ...
+      }
+
+  #ifdef __cplusplus
+  }
+  #endif      
+</code></pre>
+</li>
+<li>
+<p>When one need to pass function pointer for callback or anything else, It should be static free function or static member function.</p>
+</li>
+<li>
+<p>Use <code>static</code> at declaration, do not at definition.</p>
+</li>
+<li>
+<p>Things might need to be static, but not constant. Mutate the static value to wrap things as class.</p>
+</li>
+</ul>
+<h2 id="io">IO</h2>
+<h3 id="bluetooth-low-energy">Bluetooth Low Energy</h3>
+<p>Bluetooth low energy. [^1]</p>
+<h4 id="protocol-stack">Protocol Stack</h4>
+<ul>
+<li>App</li>
+<li>Host
+<ul>
+<li>GAP(General Access Profile), GATT(General Attribute Protocol)</li>
+<li>SMP(Security Manager), ATT(Attribute Protocol)</li>
+<li>L2CAP(Logical Link Control &amp; Adaption Protocol)</li>
+</ul>
+</li>
+<li>Controller
+<ul>
+<li>LL(Link Layer)</li>
+<li>PHY(Physical Layer)</li>
+</ul>
+</li>
+</ul>
+<h5 id="phy">PHY</h5>
+<p>40 2.4 GHz channels. 3 for advertising, 37 for data.</p>
+<h5 id="ll">LL</h5>
+<p>Have 5 state</p>
+<ul>
+<li>Standby
+<ul>
+<li>No communication</li>
+</ul>
+</li>
+<li>Advertising
+<ul>
+<li>Sending advertizement packet, can receive response to it, Or send response to others</li>
+</ul>
+</li>
+<li>Scanning
+<ul>
+<li>Scanning the advertizement channels</li>
+</ul>
+</li>
+<li>Initial
+<ul>
+<li>After receving connectable advertizing packet, connection request has been sent and waiting for connection</li>
+</ul>
+</li>
+<li>Connection
+<ul>
+<li>Connection made</li>
+</ul>
+</li>
+</ul>
+<h5 id="gap">GAP</h5>
+<p>GAP constrols advertising and connection. GAP defines the way a device is displayed to other devices and making connection.</p>
+<p>GAP have cetral-prepheral model and broadcaster-observer model. 1:1 connection is cetral-prepheral model.</p>
+<p>GAP advertising packet includes advertising-data-payload and optional scan-data-payload. Maximum 31 Bytes</p>
+<p>Peripheral device sends advertising packet every advertising interval. If a central device descovered the advertising packet, and also interested in scan response data, the central device could request the scan response data and peripheral device will respond. This is called boadcasting.</p>
+<p>Devices only do boroadcaseing is beacon.</p>
+<p>Once devices are connected, advertising is terminated and no ather device can discover the peripheral device. After connection, devices will communicate according to the defined service and characteristic.</p>
+<h5 id="gatt">GATT</h5>
+<p>GATT defines the data model and protocol. GATT defines profile, services and characteristics. Including what is the data, r/w/notification permission, etc.</p>
+<pre><code>profile :: Set service
+service :: Set characteristic
+characteristic :: (UUID, ...)
+</code></pre>
+<p>There are standard services and custom services. Standard services have 16 bits UUID, and custom services have 128 bits UUID.</p>
+<p>There are standard characteristics and custom characteristics. Predifined services does have some essential involved characteristics.</p>
+<p>After the connection, the central becomes GATT client (the one aquire the data) and connects to GATT server (the one produce data).</p>
+<p>Descripter describes a characteristic.</p>
+<h5 id="att">ATT</h5>
+<p>GATT is upper most implementation of ATT and often refered as GATT/ATT. Attribute defines services and characteristics.</p>
+<h5 id="profile">Profile</h5>
+<p>Set of services. Predefined standard services have some essential services. And custom services could be added.</p>
+<h3 id="implementation">Implementation</h3>
+<ul>
+<li>
+<p>ESP-IDF ble_spp_client</p>
+<ul>
+<li>Keep scanning the counter part</li>
+</ul>
+</li>
+<li>
+<p>ESP-IDF ble_spp_client</p>
+<ul>
+<li>Does not work with error on start up<pre><code>I (0) cpu_start: App cpu up.
+I (455) heap_init: Initializing. RAM available for dynamic allocation:
+I (462) heap_init: At 3FFAFF10 len 000000F0 (0 KiB): DRAM
+I (468) heap_init: At 3FFB6388 len 00001C78 (7 KiB): DRAM
+I (474) heap_init: At 3FFB9A20 len 00004108 (16 KiB): DRAM
+I (480) heap_init: At 3FFC8E78 len 00017188 (92 KiB): DRAM
+I (486) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (492) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (499) heap_init: At 40095B1C len 0000A4E4 (41 KiB): IRAM
+I (505) cpu_start: Pro cpu start user code
+I (523) spi_flash: detected chip: generic
+I (524) spi_flash: flash io: dio
+W (524) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (535) cpu_start: Starting scheduler on PRO CPU.
+I (0) cpu_start: Starting scheduler on APP CPU.
+I (565) BTDM_INIT: BT controller compile version [ad2b7cd]
+I (565) system_api: Base MAC address is not set
+I (565) system_api: read default base MAC address from EFUSE
+I (575) phy_init: phy_version 4670,719f9f6,Feb 18 2021,17:07:07
+I (1045) gatt_event: ESP_GATTS_REG_EVT
+I (1055) gatt_event: ESP_GATTS_REG_EVT
+W (1055) BT_BTM: BTM_BleWriteAdvData, Partial data write into ADV
+I (1065) gatt_event: ESP_GATTS_CREAT_ATTR_TAB_EVT
+I (1065) HID_LE_PRF: esp_hidd_prf_cb_hdl(), start added the hid service to the stack database. incl_handle = 40
+I (1075) gap event: ESP_GAP_BLE_ADV_DATA_SET_COMPLETE_EVT
+I (1085) gatt_event: ESP_GATTS_CREAT_ATTR_TAB_EVT
+I (1085) HID_LE_PRF: hid svc handle = 2d
+I (1085) gatt_event: ESP_GATTS_START_EVT
+I (1105) gap event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+I (1105) gatt_event: ESP_GATTS_START_EVT
+I (18065) gatt_event: ESP_GATTS_CONNECT_EVT
+I (18065) gatt_event: ESP_GATTS_CONNECT_EVT
+I (18065) HID_LE_PRF: HID connection establish, conn_id = 0
+I (18075) HID_DEMO: ESP_HIDD_EVENT_BLE_CONNECT
+I (18155) gatt_event: ESP_GATTS_MTU_EVT
+I (18155) gatt_event: ESP_GATTS_MTU_EVT
+I (18695) gatt_event: ESP_GATTS_READ_EVT
+I (18815) gatt_event: ESP_GATTS_READ_EVT
+I (19235) gatt_event: ESP_GATTS_READ_EVT
+I (19295) gatt_event: ESP_GATTS_READ_EVT
+I (19355) gatt_event: ESP_GATTS_READ_EVT
+I (19415) gatt_event: ESP_GATTS_READ_EVT
+I (19475) gatt_event: ESP_GATTS_READ_EVT
+I (19535) gatt_event: ESP_GATTS_WRITE_EVT
+I (19595) gatt_event: ESP_GATTS_WRITE_EVT
+E (19655) BT_GATT: gatts_write_attr_perm_check - GATT_INSUF_ENCRYPTION
+I (24225) gap event: ESP_GAP_BLE_KEY_EVT
+I (24225) gap event: ESP_GAP_BLE_KEY_EVT
+I (24385) gap event: ESP_GAP_BLE_KEY_EVT
+I (24385) gap event: ESP_GAP_BLE_KEY_EVT
+I (24475) gap event: ESP_GAP_BLE_AUTH_CMPL_EVT
+I (24475) HID_DEMO: remote BD_ADDR: 6e2a646ce0ca
+I (24475) HID_DEMO: address type = 1
+I (24485) HID_DEMO: pair status = success
+I (24485) gatt_event: ESP_GATTS_WRITE_EVT
+I (24695) gatt_event: ESP_GATTS_WRITE_EVT
+I (24755) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+I (24755) gatt_event: ESP_GATTS_READ_EVT
+I (26055) HID_DEMO: Send the volume
+I (26055) gatt_event: ESP_GATTS_CONF_EVT
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Arduino SerialToSerialBT</p>
+<ul>
+<li>Does not recognized by either phone and computer.</li>
+</ul>
+</li>
+<li>
+<p>ble_hid_device_demo</p>
+<ul>
+<li>The most stable implementation so far.</li>
+<li>Do code review.</li>
+<li>This <a href="https://github.com/espressif/esp-idf/blob/master/examples/bluetooth/bluedroid/ble/gatt_server/tutorial/Gatt_Server_Example_Walkthrough.html">article</a> is also relevent</li>
+</ul>
+</li>
+<li>
+<p>Clean up to single gatt profile version</p>
+<ul>
+<li>Origial
+<ul>
+<li>Core logic : <code>hidd_event_callback</code> connection, disconnection etc.</li>
+<li><code>hidd_le_env.hidd_cb</code> is holding <code>hidd_event_callback</code>.</li>
+<li>On the other hand, the actual gatt callback registed with idf api <code>esp_ble_gatts_register_callback</code>, is another global function, <code>gatts_event_handler</code>. It does react to initial event by it self, but not that important. Major function is dispatch the event by matching suitable profile in profile table <code>heart_rate_profile_tab</code>, which is un necesaary.</li>
+<li><code>heart_rate_profile_tab</code> is a global array holding profiles. profile is basically, tuple of gatt interface and callback function. The instance is holding only one memeber with callback function named <code>esp_hidd_prf_cb_hdl</code>.</li>
+<li><code>esp_hidd_prf_cb_hdl</code> is another global function referencing <code>hidd_le_env.hidd_cb</code>, the global variable mentioned earlier. The function create service by calling idf api <code>esp_ble_gatts_create_attr_tab</code> with <code>gatt_if</code>. Do something on battery event as well. Deligate writing event to <code>hidd_le_env.hidd_cb</code>. On attribute table create event, <code>esp_ble_gatts_create_attr_tab</code> and <code>esp_ble_gatts_start_service</code> apis are called. Also setting some global variable <code>hid_rpt_map</code>.</li>
+</ul>
+</li>
+<li>Cleaned up version
+<ul>
+<li>There should be no table. Make <code>esp_hidd_prf_cb_hdl</code> or semilar function deal with the default logic, and have <code>hidd_event_callback</code> do the rest. or just make them one. Maybe not one. there could be some initial setup needed by application.</li>
+<li>Steady state output is done by <code>esp_ble_gatts_send_indicate</code>. It requires <code>gatts_if</code>, <code>conn_id</code>, <code>p_rpt-&gt;handle</code>, <code>length</code>, <code>data</code>, <code>false</code>, the last is need_confirm. Hanlde is attribute handle <code>uint16_t attr_handle</code>.
+<ul>
+<li><code>gatts_if</code>: Aquired from initial gatt event.</li>
+<li>'conn_id': Get</li>
+<li>WTF handle, length, data.</li>
+</ul>
+</li>
+<li>When did it actually sends out name, and profile?
+<ul>
+<li><code>hidd_event_callback</code> on <code>ESP_HIDD_EVENT_REG_FINISH</code> registered by <code>esp_ble_gap_set_device_name(HIDD_DEVICE_NAME)</code>, <code>esp_ble_gap_config_adv_data(&amp;hidd_adv_data)</code>. The original event is done at <code>ESP_GATTS_REG_EVT</code>.</li>
+</ul>
+</li>
+<li>Event is first handled by <code>gatts_event_handler</code> and <code>esp_hidd_prf_cb_hdl</code> and <code>hidd_event_callback</code></li>
+<li>Events are
+<ul>
+<li>ESP_GATTS_REG_EVT
+<ul>
+<li>Initial event. Save interface and connection id.</li>
+<li><code>esp_ble_gap_config_local_icon()</code> to set icon</li>
+<li><code>esp_ble_gatts_create_attr_tab()</code> with LONG predifined attribute. Which holds data of service and characteristics.</li>
+</ul>
+</li>
+<li>ESP_BAT_EVENT_REG
+<ul>
+<li>Do nothing</li>
+</ul>
+</li>
+<li>ESP_HIDD_EVENT_BLE_CONNECT
+<ul>
+<li>Log and save connection id</li>
+</ul>
+</li>
+<li>ESP_HIDD_EVENT_BLE_DISCONNECT
+<ul>
+<li>sec_conn false</li>
+<li>Log</li>
+<li><code>esp_ble_gap_start_advertising(&amp;hidd_adv_params);</code> Restart advertising</li>
+</ul>
+</li>
+<li>ESP_HIDD_EVENT_BLE_VENDOR_REPORT_WRITE_EVT
+<ul>
+<li>Log</li>
+</ul>
+</li>
+<li>ESP_HIDD_EVENT_BLE_LED_REPORT_WRITE_EVT
+<ul>
+<li>Log</li>
+</ul>
+</li>
+<li>ESP_GATTS_CONF_EVT
+<ul>
+<li>None</li>
+</ul>
+</li>
+<li>ESP_GATTS_CREATE_EVT
+<ul>
+<li>None</li>
+</ul>
+</li>
+<li>ESP_GATTS_CONNECT_EVT
+<ul>
+<li><code>memcpy(cb_param.connect.remote_bda, param-&gt;connect.remote_bda, sizeof(esp_bd_addr_t));</code> Save bda</li>
+<li><code>cb_param.connect.conn_id = param-&gt;connect.conn_id;</code> Save connection Id</li>
+<li><code>hidd_clcb_alloc(param-&gt;connect.conn_id, param-&gt;connect.remote_bda);</code> Not sure what this is</li>
+<li><code>esp_ble_set_encryption(param-&gt;connect.remote_bda, ESP_BLE_SEC_ENCRYPT_NO_MITM);</code> Use gap ble api as is.</li>
+</ul>
+</li>
+<li>ESP_GATTS_DISCONNECT_EVT
+<ul>
+<li><code>hidd_clcb_dealloc(param-&gt;disconnect.conn_id);</code> Not sure what this is</li>
+</ul>
+</li>
+<li>ESP_GATTS_CLOSE_EVT
+<ul>
+<li>Do nothing</li>
+</ul>
+</li>
+<li>ESP_GATTS_WRITE_EVT
+<ul>
+<li>Calls another event, <code>ESP_HIDD_EVENT_BLE_LED_REPORT_WRITE_EVT</code></li>
+</ul>
+</li>
+<li>ESP_GATTS_CREAT_ATTR_TAB_EVT
+<ul>
+<li>Verify <code>param-&gt;add_attr_tab.</code> data</li>
+<li>Save service handles</li>
+<li>Log</li>
+<li><code>esp_ble_gatts_create_attr_tab(hidd_le_gatt_db, gatts_if, HIDD_LE_IDX_NB, 0);</code> Main attr_tab</li>
+<li>Fill up <code>hid_add_id_tbl</code> Not sure what it is</li>
+<li><code>esp_ble_gatts_start_service(hidd_le_env.hidd_inst.att_tbl[HIDD_LE_IDX_SVC]);</code> start service</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Event debugging</p>
+<pre><code>  I (0) cpu_start: App cpu up.
+  I (455) heap_init: Initializing. RAM available for dynamic allocation:
+  I (462) heap_init: At 3FFAFF10 len 000000F0 (0 KiB): DRAM
+  I (468) heap_init: At 3FFB6388 len 00001C78 (7 KiB): DRAM
+  I (474) heap_init: At 3FFB9A20 len 00004108 (16 KiB): DRAM
+  I (480) heap_init: At 3FFC8E78 len 00017188 (92 KiB): DRAM
+  I (486) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+  I (492) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+  I (499) heap_init: At 40095B1C len 0000A4E4 (41 KiB): IRAM
+  I (505) cpu_start: Pro cpu start user code
+  I (523) spi_flash: detected chip: generic
+  I (524) spi_flash: flash io: dio
+  W (524) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+  I (535) cpu_start: Starting scheduler on PRO CPU.
+  I (0) cpu_start: Starting scheduler on APP CPU.
+  I (565) BTDM_INIT: BT controller compile version [ad2b7cd]
+  I (565) system_api: Base MAC address is not set
+  I (565) system_api: read default base MAC address from EFUSE
+  I (575) phy_init: phy_version 4670,719f9f6,Feb 18 2021,17:07:07
+  I (1045) gatt_event: ESP_GATTS_REG_EVT
+  I (1055) gatt_event: ESP_GATTS_REG_EVT
+  W (1055) BT_BTM: BTM_BleWriteAdvData, Partial data write into ADV
+  I (1065) gatt_event: ESP_GATTS_CREAT_ATTR_TAB_EVT
+  I (1065) HID_LE_PRF: esp_hidd_prf_cb_hdl(), start added the hid service to the stack database. incl_handle = 40
+  I (1075) gap event: ESP_GAP_BLE_ADV_DATA_SET_COMPLETE_EVT
+  I (1085) gatt_event: ESP_GATTS_CREAT_ATTR_TAB_EVT
+  I (1085) HID_LE_PRF: hid svc handle = 2d
+  I (1085) gatt_event: ESP_GATTS_START_EVT
+  I (1105) gap event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+  I (1105) gatt_event: ESP_GATTS_START_EVT
+  I (18065) gatt_event: ESP_GATTS_CONNECT_EVT
+  I (18065) gatt_event: ESP_GATTS_CONNECT_EVT
+  I (18065) HID_LE_PRF: HID connection establish, conn_id = 0
+  I (18075) HID_DEMO: ESP_HIDD_EVENT_BLE_CONNECT
+  I (18155) gatt_event: ESP_GATTS_MTU_EVT
+  I (18155) gatt_event: ESP_GATTS_MTU_EVT
+  I (18695) gatt_event: ESP_GATTS_READ_EVT
+  I (18815) gatt_event: ESP_GATTS_READ_EVT
+  I (19235) gatt_event: ESP_GATTS_READ_EVT
+  I (19295) gatt_event: ESP_GATTS_READ_EVT
+  I (19355) gatt_event: ESP_GATTS_READ_EVT
+  I (19415) gatt_event: ESP_GATTS_READ_EVT
+  I (19475) gatt_event: ESP_GATTS_READ_EVT
+  I (19535) gatt_event: ESP_GATTS_WRITE_EVT
+  I (19595) gatt_event: ESP_GATTS_WRITE_EVT
+  E (19655) BT_GATT: gatts_write_attr_perm_check - GATT_INSUF_ENCRYPTION
+  I (24225) gap event: ESP_GAP_BLE_KEY_EVT
+  I (24225) gap event: ESP_GAP_BLE_KEY_EVT
+  I (24385) gap event: ESP_GAP_BLE_KEY_EVT
+  I (24385) gap event: ESP_GAP_BLE_KEY_EVT
+  I (24475) gap event: ESP_GAP_BLE_AUTH_CMPL_EVT
+  I (24475) HID_DEMO: remote BD_ADDR: 6e2a646ce0ca
+  I (24475) HID_DEMO: address type = 1
+  I (24485) HID_DEMO: pair status = success
+  I (24485) gatt_event: ESP_GATTS_WRITE_EVT
+  I (24695) gatt_event: ESP_GATTS_WRITE_EVT
+  I (24755) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+  I (24755) gatt_event: ESP_GATTS_READ_EVT
+  I (26055) HID_DEMO: Send the volume
+  I (26055) gatt_event: ESP_GATTS_CONF_EVT
+</code></pre>
+<ul>
+<li>
+<p>Events on startup</p>
+<ul>
+<li>ESP_GATTS_REG_EVT</li>
+<li>ESP_GATTS_REG_EVT</li>
+<li>ESP_GATTS_CREAT_ATTR_TAB_EVT</li>
+<li>ESP_GAP_BLE_ADV_DATA_SET_COMPLETE_EVT</li>
+<li>ESP_GATTS_START_EVT</li>
+<li>ESP_GAP_BLE_ADV_START_COMPLETE_EVT</li>
+<li>ESP_GATTS_START_EVT
+The ported version doesn't emit ESP_GATTS_START_EVT.
+Actually not responding to it</li>
+<li><code>gatts_profile_event_handler</code> doing nothing Okay, another source also does nothing on this event, when does it evoke?</li>
+<li><a href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/bluetooth/esp_gatts.html?highlight=esp_gatts_start_evt#_CPPv4N20esp_gatts_cb_event_t19ESP_GATTS_START_EVTE">Documentation</a> says when starting service is completed
+<ul>
+<li>What strats service then?</li>
+<li>Maybe <code>esp_ble_gatts_start_service</code> this on <code>ESP_GATTS_CREAT_ATTR_TAB_EVT</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Okay let's see <code>ESP_GATTS_REG_EVT</code> first.</p>
+<ul>
+<li><a href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/bluetooth/esp_gatts.html?highlight=esp_gatts_start_evt#_CPPv4N20esp_gatts_cb_event_t19ESP_GATTS_START_EVTE">Documentation</a> says when application id is registered.</li>
+<li><code>ESP_GATTS_REG_EVT</code> is the first event should be get called.</li>
+<li>It was because the main application was returning.</li>
+<li>Main application is returning but the the other processes keep running.</li>
+<li>Per <a href="https://github.com/espressif/esp-idf/blob/master/examples/bluetooth/bluedroid/ble/gatt_server_service_table/tutorial/Gatt_Server_Service_Table_Example_Walkthrough.html">this</a> guide, maybe <code>esp_ble_gatts_app_register(ESP_HEART_RATE_APP_ID);</code> this call is missing.<pre><code>esp_err_t hidd_status;
+
+// * How does this setup GATT callback?
+
+if(callbacks != NULL) {
+    hidd_le_env.hidd_cb = callbacks;
+} else {
+    return ESP_FAIL;
+}
+
+// * This function actually register the callback from global variable hidd_le_env
+if((hidd_status = hidd_register_cb()) != ESP_OK) {
+    return hidd_status;
+}
+
+esp_ble_gatts_app_register(BATTRAY_APP_ID);
+
+if((hidd_status = esp_ble_gatts_app_register(HIDD_APP_ID)) != ESP_OK) {
+    return hidd_status;
+}
+
+return hidd_status;
+</code></pre>
+</li>
+<li>Okay after the registration of callback function, it does call the <code>esp_ble_gatts_app_register</code> function twice.</li>
+</ul>
+</li>
+<li>
+<p>What does <code>esp_ble_gatts_app_register</code> actually do?</p>
+<ul>
+<li>It is an esp-idf api, not application function.</li>
+<li>Does it has to work with profile table? Which table is the implementation referencing? Why is it passing table index to the external api.</li>
+<li>Check out the gatt callback function an if the api is application -&gt; Save it at env and call <code>hidd_le_create_service</code> with <code>gatts_if</code>. If battery, not do much.</li>
+<li>There might be pre defined app ids.<pre><code>#define HIDD_APP_ID			0x1812//ATT_SVC_HID
+
+#define BATTRAY_APP_ID       0x180f
+</code></pre>
+</li>
+<li>Okay, now it works with <code>esp_ble_gatts_app_register</code> call.</li>
+<li>App ids might be user defined value for interal event dispatch.</li>
+</ul>
+</li>
+<li>
+<p>Now the problem is <code>esp_ble_gatts_create_attr_tab(bas_att_db, gatts_if, BAS_IDX_NB, 0)</code>.</p>
+<ul>
+<li>Needs quite extensive data vas_atta_db.</li>
+<li>What are the other attribute db examples like?</li>
+<li>A db is an array of <code>esp_gatts_attr_db_t</code>.<pre><code>typedef struct
+{
+    esp_attr_control_t      attr_control;                   /*!&lt; The attribute control type */
+    esp_attr_desc_t         att_desc;                       /*!&lt; The attribute type */
+} esp_gatts_attr_db_t;
+</code></pre>
+</li>
+<li>Attribute discription is like below;<pre><code>typedef struct
+{  
+uint16_t uuid_length;              /*!&lt; UUID length */
+uint8_t  *uuid_p;                  /*!&lt; UUID value */
+uint16_t perm;                     /*!&lt; Attribute permission */
+uint16_t max_length;               /*!&lt; Maximum length of the element*/
+uint16_t length;                   /*!&lt; Current length of the element*/
+uint8_t  *value;                   /*!&lt; Element value array*/
+} esp_attr_desc_t; 
+</code></pre>
+</li>
+<li>Each of them represent some data.</li>
+<li><code>{ESP_GATT_AUTO_RSP}</code> seems default for <code>esp_attr_control_t      attr_control;</code>.</li>
+<li><code>ESP_UUID_LEN_16</code> seems default for <code>uuid_length</code>.</li>
+<li><code>uuid_p</code> should be pointer of a value. Actual values are defined at;
+<ul>
+<li><code>/Users/chanwooahn/esp/esp-idf/components/bt/host/bluedroid/api/include/api/esp_gatt_defs.h</code></li>
+<li>However, they are pointers =&gt; need to make instance.</li>
+</ul>
+</li>
+<li><code>ESP_GATT_PERM_READ</code> seems default for <code>perm</code>.</li>
+<li><code>max_length</code> and <code>length</code> have various value, but often the same
+<ul>
+<li><code>CHAR_DECLARATION_SIZE</code> for character declaration.</li>
+</ul>
+</li>
+<li>For <code>value</code>
+<ul>
+<li>If there is <code>ESP_GATT_PERM_WRITE</code> in <code>perm</code> often <code>NULL</code></li>
+<li>If is character declaration, often on of pointer type conversioned followings;<pre><code>static const uint8_t char_prop_notify = ESP_GATT_CHAR_PROP_BIT_NOTIFY;
+static const uint8_t char_prop_read = ESP_GATT_CHAR_PROP_BIT_READ;
+static const uint8_t char_prop_write_nr = ESP_GATT_CHAR_PROP_BIT_WRITE_NR;
+static const uint8_t char_prop_read_write = ESP_GATT_CHAR_PROP_BIT_WRITE|ESP_GATT_CHAR_PROP_BIT_READ;
+static const uint8_t char_prop_read_notify = ESP_GATT_CHAR_PROP_BIT_READ|ESP_GATT_CHAR_PROP_BIT_NOTIFY;
+static const uint8_t char_prop_read_write_notify = ESP_GATT_CHAR_PROP_BIT_READ|ESP_GATT_CHAR_PROP_BIT_WRITE|ESP_GATT_CHAR_PROP_BIT_NOTIFY;
+static const uint8_t char_prop_read_write_write_nr = ESP_GATT_CHAR_PROP_BIT_READ|ESP_GATT_CHAR_PROP_BIT_WRITE|ESP_GATT_CHAR_PROP_BIT_WRITE_NR;
+</code></pre>
+</li>
+</ul>
+</li>
+<li>Service creation
+<ul>
+<li>HID source did
+<ul>
+<li><code>esp_ble_gap_config_local_icon(ESP_BLE_APPEARANCE_GENERIC_HID);</code></li>
+<li><code>esp_ble_gap_set_device_name(HIDD_DEVICE_NAME);</code></li>
+<li><code>esp_ble_gap_config_adv_data(&amp;hidd_adv_data);</code></li>
+<li><code>hidd_le_create_service(hidd_le_env.gatt_if);</code>
+<ul>
+<li><code>esp_ble_gatts_create_attr_tab(bas_att_db, gatts_if, BAS_IDX_NB, 0);</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Another sourece did
+<ul>
+<li><code>esp_ble_gap_set_device_name(TEST_DEVICE_NAME);</code></li>
+<li><code>esp_ble_gap_config_adv_data(&amp;adv_data);</code></li>
+<li><code>esp_ble_gap_config_adv_data(&amp;scan_rsp_data)</code> (scan data)</li>
+<li><code>esp_ble_gatts_create_service(gatts_if, &amp;gl_profile_tab[PROFILE_A_APP_ID].service_id, GATTS_NUM_HANDLE_TEST_A);</code></li>
+</ul>
+</li>
+<li>Seems like <code>esp_ble_gatts_create_attr_tab</code> could be used instead of <code>esp_ble_gatts_create_service</code> and vice versa</li>
+</ul>
+</li>
+<li>Why some entry has decalaration and value, and some does not?
+<ul>
+<li>???</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Now handle <code>ESP_GATTS_CONNECT_EVT</code></p>
+</li>
+<li>
+<p><code>E (13377) BT_APPL: earlier enc was not done for same device</code> after connection.</p>
+<ul>
+<li>Seems the error is related with global variable <code>bta_dm_cb</code>.</li>
+<li>But sometimes it does not happen.</li>
+<li>???</li>
+</ul>
+</li>
+<li>
+<p>How did hfp works? Does client read all the data from device by polling? Or does device was sending notification?</p>
+<ul>
+<li>???</li>
+</ul>
+</li>
+<li>
+<p>Data rate?</p>
+<ul>
+<li>Seems good. let's test.</li>
+</ul>
+</li>
+<li>
+<p>How does the source code works?</p>
+<ul>
+<li>Works only for sound device.</li>
+<li>Need generic.</li>
+<li><a href="https://github.com/OpenBluetoothToolbox/SimpleBLE/tree/main">OpenBLE</a> seems useful.</li>
+</ul>
+</li>
+<li>
+<p>What is the bluetooth device address?</p>
+<ul>
+<li>Id for bluetooth device.</li>
+<li>But what exactly is the device? Is it physical or logical?</li>
+<li>It is 48 bits, 6 Bytes id. First half is OUI(Organized Unique Identifier) which is assined by IEEE. The second half is LAP(Lower Address Part) which is given by vender.
+<ul>
+<li>For ESP32, there is predefined value. It could be checked with <code> esp_bt_dev_get_address()</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>What is the attribute handle for the read event?</p>
+<ul>
+<li>It coule be service handle or characteristic handle.</li>
+<li>The function get called when one tries to create service? (Or application maybe) has signature like below; <code>esp_err_t esp_ble_gatts_create_attr_tab(const esp_gatts_attr_db_t * gatts_attr_db, esp_gatt_if_t gatts_if, uint16_t max_nb_attr, uint8_t srvc_inst_id)</code></li>
+<li>The parameter <code>max_nb_attr</code> is the length of the table or the array.</li>
+<li>The table or array containes services and charteristics (declaration, definition).</li>
+<li>The table itself is more like a service rather than profile.</li>
+</ul>
+</li>
+<li>
+<p>Check the definitions again.</p>
+<ul>
+<li>
+<p>There is a profile table, which is a list of profile instance.</p>
+<ul>
+<li><code>ProfileTable :: [ProfileInstance]</code></li>
+</ul>
+</li>
+<li>
+<p>Profile instace is consists of callback function, gatt interface, app id, connection id. This is not ESP-IDF specified structure.</p>
+<ul>
+<li><code>ProfileInstance :: (GattCallback, GattInterface, AppId, ConnectionId)</code></li>
+<li>Which implies that profile instance ~ app (profile)</li>
+<li>Actually, the gatt event parameter has member named app id.</li>
+</ul>
+</li>
+<li>
+<p>A Callback function is ESP-IDF defined function with certain signature.</p>
+<ul>
+<li><code>GattCallback :: (esp_gatts_cb_event_t, esp_gatt_if_t, esp_ble_gatts_cb_param_t) -&gt; void</code></li>
+</ul>
+</li>
+<li>
+<p>How does the table realated with Application profile list, or profile instance?</p>
+<ul>
+<li><code>esp_ble_gatts_create_attr_tab</code> could be used instead of <code>esp_ble_gatts_create_service</code> and vice versa.
+<ul>
+<li>Impliese an attribute table represent a service.</li>
+</ul>
+</li>
+<li>Creation of attribute table invokes <code>ESP_GATTS_CREAT_ATTR_TAB_EVT</code> event.</li>
+<li>Not sure why but <code>esp_ble_gatts_create_attr_tab</code> are called with the same <code>srvc_inst_id</code>, 0;</li>
+<li><code>esp_err_t esp_ble_gatts_start_service(uint16_t service_handle)</code> takes service handle. In the example this is the first index of attribute db.</li>
+<li>When a event comes in. It will dispatched by the gatt interface.
+<ul>
+<li>Profiles are stored in the profile table.</li>
+<li>Each ProfileInstance has connected gatt interface.</li>
+<li>Compare this interface to determine if the call back is get called or not.</li>
+</ul>
+</li>
+<li>When does the interface get attatched?
+<ul>
+<li>On <code>ESP_GATTS_REG_EVT</code>.</li>
+</ul>
+</li>
+<li>So right after the configuration, the global and common gap and gatt callback functions are registered. However, these things are not the actual starting point.
+<ul>
+<li>The actual starting point is the initial service registration with <code>esp_err_t esp_ble_gatts_app_register(uint16_t app_id)</code>. At this point, the Profile table already exists. Application id is also registered id is also installed at profile instance.</li>
+<li>It will envoke <code>ESP_GATTS_REG_EVT</code>. While handling this event, call <code>esp_ble_gatts_create_attr_tab(battery_service_attribute_db, gatts_if, BAS_IDX_NB, 0);</code> with the db in accordance. However, the attribute db is not a member of the profile instance. So this will be the point actually they are associated.</li>
+</ul>
+</li>
+<li>Okay so I believe a profile instance should also hold attribute db as well.
+<ul>
+<li>How about other implementations?
+<ul>
+<li>Walkthrough also does have db inside the profile instance.</li>
+</ul>
+</li>
+<li>Does this application id even visible to clients? It seems it does not have to hold its own identifier.</li>
+</ul>
+</li>
+<li>Source code review
+<ul>
+<li><code>esp_err_t esp_ble_gatts_create_service(esp_gatt_if_t gatts_if, esp_gatt_srvc_id_t *service_id, uint16_t num_handle);</code> has to be called first and it will produce application id.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>How to pass a non-static function to reference.</p>
+<ul>
+<li>This is the way how!<pre><code>#include &lt;iostream&gt;
+
+using LambdaFunction = void(*)(int);
+
+static LambdaFunction lambdaFunction = nullptr;
+
+void staticFunction() {
+    
+    if (lambdaFunction) {
+        lambdaFunction(42);  // Call the lambda function if it is set
+    }else{
+        std::cout &lt;&lt; &quot;Nil&quot; &lt;&lt; std::endl;
+    }
+}
+
+int main() {
+    staticFunction();  // Nil
+
+    lambdaFunction = [](int x) {
+        std::cout &lt;&lt; x &lt;&lt; std::endl;
+    };
+    
+    staticFunction();  // 42
+
+    return 0;
+}
+</code></pre>
+</li>
+<li>it only works for non-capturing lambdas. <a href="https://stackoverflow.com/questions/7852101/c-lambda-with-captures-as-a-function-pointer">Here</a> is the version works for capturing lambdas.<pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+struct Lambda {
+    template&lt;typename Tret, typename T&gt;
+    static Tret lambda_ptr_exec(void* data) {
+        return (Tret) (*(T*)fn&lt;T&gt;())(data);
+    }
+
+    template&lt;typename Tret = void, typename Tfp = Tret(*)(void*), typename T&gt;
+    static Tfp ptr(T&amp; t) {
+        fn&lt;T&gt;(&amp;t);
+        return (Tfp) lambda_ptr_exec&lt;Tret, T&gt;;
+    }
+
+    template&lt;typename T&gt;
+    static void* fn(void* new_fn = nullptr) {
+        static void* fn;
+        if (new_fn != nullptr)
+            fn = new_fn;
+        return fn;
+    }
+};
+
+static void(*inner_function)(void *)  = nullptr;
+
+static void outer_function()
+{
+    if (inner_function != nullptr)
+    {
+        inner_function(nullptr);
+    }
+}
+
+
+int main() {
+
+    int a = 100;
+    auto b = [&amp;](void*) {return ++a;};
+    
+    void (*f1)(void*) = Lambda::ptr(b);
+    f1(nullptr);
+    printf(&quot;%d\n&quot;, a);  // 101 
+    
+    outer_function();
+    printf(&quot;%d\n&quot;, a);  // 101 
+    
+    inner_function = Lambda::ptr(b);
+    
+    outer_function();
+    printf(&quot;%d\n&quot;, a);  // 102
+    
+    return 0;
+}
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>This is the way how it works for no argument function.</p>
+</li>
+<li>
+<p>Okay, now per <a href="https://github.com/espressif/esp-idf/issues/11900#issuecomment-1641397325">this</a> answer, it seems quite sure that there is no one idiomatic way of doing this.</p>
+</li>
+<li>
+<p>Let's wrap this up.</p>
+<ul>
+<li>On initialization of Ble or an IO including this IO should return IO object. Input should be a stream and output should be an object taking variant as input.</li>
+<li>The input type should be a variant of;
+<ul>
+<li><code>()</code> (initialization)</li>
+<li><code>(esp_gap_ble_cb_event_t event, esp_ble_gap_cb_param_t *param)</code> (gap call)</li>
+<li><code>esp_gatts_cb_event_t event, esp_gatt_if_t gatts_if, esp_ble_gatts_cb_param_t *param</code> (gatt callback)</li>
+</ul>
+</li>
+<li>The output type should be a variant of;
+<ul>
+<li>However variant might not be available in some barebone, no-STL environments.</li>
+<li>Should I go with a tagged union?</li>
+</ul>
+</li>
+<li>This time go with the official reference structure.
+<ul>
+<li>If the constructor take a list of profiles I the default gap and gatt call_back function could be built.</li>
+<li>Also, if it takes two gap callback and gatt callback function, They could be get called after the default callback.</li>
+<li>This call back could reference external state although It seems not healthy, lets go this way for now. Also, other functions may call the ble output. which seems also not healthy, but let's go this way,,,, right?</li>
+</ul>
+</li>
+<li>At which point the current profile is set and saved?
+<ul>
+<li>Per the official guide, a profile should hold the information of connection id and gatts_if.</li>
+<li>Connection id is captured at <code>ESP_HIDD_EVENT_BLE_CONNECT</code>.
+<ul>
+<li>Which is essentially <code>ESP_GATTS_CONNECT_EVT</code>, with a value of <code>param-&gt;connect.conn_id</code>.</li>
+</ul>
+</li>
+<li>Gatts interface is captured at <code>ESP_GATTS_REG_EVT</code>.
+<ul>
+<li>As <code>gatts_if</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>There has to be a list of (gatt_if, conn_id) with the length of profiles.
+<ul>
+<li>Which could be StaticArray.</li>
+</ul>
+</li>
+<li>Side-effect callback crashes.
+<ul>
+<li>Is it the callback call itself? Or the access to the capture?
+<ul>
+<li>It is the access to external referenced variables.</li>
+</ul>
+</li>
+<li>How about read-only access?
+<ul>
+<li>I does not work either.</li>
+</ul>
+</li>
+<li>How about access with pointer with copy capture?
+<ul>
+<li>This works.</li>
+</ul>
+</li>
+<li>It might be because the main function returns and the reference becomes invalid. The pointer approach works because accessing an invalid pointer is undefined behavior. Is it?
+<ul>
+<li>Per <a href="https://news.ycombinator.com/item?id=34627103">this</a> thread, Dereferencing the invalid pointer is unspecified behavior.</li>
+<li>It is also, undefined behavior to do referencing an invalid reference.</li>
+<li>Does the main function return, and local objects get destroyed?
+<ul>
+<li>The main function of ESP-IDF does return before the tasks.</li>
+<li>This was the case. Problem solved.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Now what makes the connection with the PC fail early?
+<ul>
+<li>Check What is the last event? What is the difference?</li>
+<li><code>ESP_GATTS_CONNECT_EVT</code>
+<ul>
+<li><code>esp_ble_set_encryption(param-&gt;connect.remote_bda, ESP_BLE_SEC_ENCRYPT_NO_MITM);</code></li>
+<li>Save connection id from <code>param-&gt;connect.conn_id;</code></li>
+</ul>
+</li>
+<li><code>ESP_GATTS_MTU_EVT</code>
+<ul>
+<li>Save MTU if needed from <code>param-&gt;mtu.mtu</code>.</li>
+</ul>
+</li>
+<li><code>ESP_GAP_BLE_KEY_EVT</code>
+<ul>
+<li>Nothing but report the security key with <code>ESP_LOGI(GATTC_TAG, &quot;key type = %s&quot;, esp_key_type_to_str(param-&gt;ble_security.ble_key.key_type));</code>.</li>
+</ul>
+</li>
+<li><code>ESP_GAP_BLE_AUTH_CMPL_EVT</code>
+<ul>
+<li>Already done.</li>
+</ul>
+<pre><code>I (0) cpu_start: Starting scheduler on APP CPU.
+I (565) BTDM_INIT: BT controller compile version [ad2b7cd]
+I (565) system_api: Base MAC address is not set
+I (565) system_api: read default base MAC address from EFUSE
+I (575) phy_init: phy_version 4670,719f9f6,Feb 18 2021,17:07:07
+I (1035) gatt_event: ESP_GATTS_REG_EVT
+I (1045) gatt_event: ESP_GATTS_REG_EVT
+W (1045) BT_BTM: BTM_BleWriteAdvData, Partial data write into ADV
+I (1055) gatt_event: ESP_GATTS_CREAT_ATTR_TAB_EVT
+I (1055) HID_LE_PRF: esp_hidd_prf_cb_hdl(), start added the hid service to the stack database. incl_handle = 40
+I (1065) gap event: ESP_GAP_BLE_ADV_DATA_SET_COMPLETE_EVT
+I (1075) gatt_event: ESP_GATTS_CREAT_ATTR_TAB_EVT
+I (1075) HID_LE_PRF: hid svc handle = 2d
+I (1075) gatt_event: ESP_GATTS_START_EVT
+I (1095) gap event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+I (1095) gatt_event: ESP_GATTS_START_EVT
+I (97975) gatt_event: ESP_GATTS_CONNECT_EVT
+I (97975) gatt_event: ESP_GATTS_CONNECT_EVT
+I (97975) HID_LE_PRF: HID connection establish, conn_id = 0
+I (97985) HID_DEMO: ESP_HIDD_EVENT_BLE_CONNECT
+I (98065) gatt_event: ESP_GATTS_MTU_EVT
+I (98065) gatt_event: ESP_GATTS_MTU_EVT
+I (98395) gatt_event: ESP_GATTS_READ_EVT
+I (98455) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+I (98455) gatt_event: ESP_GATTS_READ_EVT
+I (98725) gap event: ESP_GAP_BLE_KEY_EVT
+I (98725) gap event: ESP_GAP_BLE_KEY_EVT
+I (98745) gatt_event: ESP_GATTS_READ_EVT
+I (98795) gap event: ESP_GAP_BLE_KEY_EVT
+I (98815) gap event: ESP_GAP_BLE_KEY_EVT
+I (98865) gap event: ESP_GAP_BLE_AUTH_CMPL_EVT
+I (98865) HID_DEMO: remote BD_ADDR: f4d48877c323
+I (98865) HID_DEMO: address type = 0
+I (98865) HID_DEMO: pair status = success
+I (98875) gatt_event: ESP_GATTS_READ_EVT
+I (98875) gatt_event: ESP_GATTS_READ_EVT
+I (98885) gatt_event: ESP_GATTS_READ_EVT
+I (98905) gatt_event: ESP_GATTS_READ_EVT
+I (98955) gatt_event: ESP_GATTS_WRITE_EVT
+I (98975) gatt_event: ESP_GATTS_WRITE_EVT
+I (99025) gatt_event: ESP_GATTS_WRITE_EVT
+I (99055) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+I (99145) gatt_event: ESP_GATTS_WRITE_EVT
+I (99175) gatt_event: ESP_GATTS_READ_EVT
+I (100045) HID_DEMO: Send the volume
+I (100045) gatt_event: ESP_GATTS_CONF_EVT
+I (103045) gatt_event: ESP_GATTS_CONF_EVT
+I (103045) gatt_event: ESP_GATTS_CONF_EVT
+I (106045) gatt_event: ESP_GATTS_CONF_EVT
+I (108045) HID_DEMO: Send the volume
+I (108045) gatt_event: ESP_GATTS_CONF_EVT
+W (109835) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x13
+I (109835) gatt_event: ESP_GATTS_DISCONNECT_EVT
+I (109835) gatt_event: ESP_GATTS_DISCONNECT_EVT
+I (109845) HID_DEMO: ESP_HIDD_EVENT_BLE_DISCONNECT
+I (109865) gap event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+I (110365) gatt_event: ESP_GATTS_CONNECT_EVT
+I (110365) gatt_event: ESP_GATTS_CONNECT_EVT
+I (110365) HID_LE_PRF: HID connection establish, conn_id = 0
+I (110375) HID_DEMO: ESP_HIDD_EVENT_BLE_CONNECT
+I (110475) gap event: ESP_GAP_BLE_AUTH_CMPL_EVT
+I (110475) HID_DEMO: remote BD_ADDR: f4d48877c323
+I (110475) HID_DEMO: address type = 0
+I (110475) HID_DEMO: pair status = success
+I (110525) gatt_event: ESP_GATTS_MTU_EVT
+I (110535) gatt_event: ESP_GATTS_MTU_EVT
+I (110605) gatt_event: ESP_GATTS_WRITE_EVT
+I (110635) gatt_event: ESP_GATTS_WRITE_EVT
+I (110665) gatt_event: ESP_GATTS_WRITE_EVT
+I (110695) gatt_event: ESP_GATTS_WRITE_EVT
+I (110725) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+I (110725) gatt_event: ESP_GATTS_READ_EVT
+I (110875) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+I (111045) gatt_event: ESP_GATTS_CONF_EVT
+I (111045) gatt_event: ESP_GATTS_CONF_EVT
+W (113705) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x13
+I (113705) gatt_event: ESP_GATTS_DISCONNECT_EVT
+I (113705) gatt_event: ESP_GATTS_DISCONNECT_EVT
+I (113715) HID_DEMO: ESP_HIDD_EVENT_BLE_DISCONNECT
+I (113735) gap event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+I (113905) gatt_event: ESP_GATTS_CONNECT_EVT
+I (113905) gatt_event: ESP_GATTS_CONNECT_EVT
+I (113905) HID_LE_PRF: HID connection establish, conn_id = 0
+I (113905) HID_DEMO: ESP_HIDD_EVENT_BLE_CONNECT
+I (114025) gap event: ESP_GAP_BLE_AUTH_CMPL_EVT
+I (114025) HID_DEMO: remote BD_ADDR: f4d48877c323
+I (114025) HID_DEMO: address type = 0
+I (114035) HID_DEMO: pair status = success
+I (114045) gatt_event: ESP_GATTS_CONF_EVT
+I (114085) gatt_event: ESP_GATTS_MTU_EVT
+I (114085) gatt_event: ESP_GATTS_MTU_EVT
+I (114155) gatt_event: ESP_GATTS_WRITE_EVT
+I (114185) gatt_event: ESP_GATTS_WRITE_EVT
+I (114245) gatt_event: ESP_GATTS_WRITE_EVT
+I (114275) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+I (114295) gatt_event: ESP_GATTS_WRITE_EVT
+I (114335) gatt_event: ESP_GATTS_READ_EVT
+I (114465) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+W (114935) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x13
+I (114935) gatt_event: ESP_GATTS_DISCONNECT_EVT
+I (114935) gatt_event: ESP_GATTS_DISCONNECT_EVT
+I (114945) HID_DEMO: ESP_HIDD_EVENT_BLE_DISCONNECT
+I (114965) gap event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+I (115675) gatt_event: ESP_GATTS_CONNECT_EVT
+I (115675) gatt_event: ESP_GATTS_CONNECT_EVT
+I (115675) HID_LE_PRF: HID connection establish, conn_id = 0
+I (115685) HID_DEMO: ESP_HIDD_EVENT_BLE_CONNECT
+I (115815) gap event: ESP_GAP_BLE_AUTH_CMPL_EVT
+I (115815) HID_DEMO: remote BD_ADDR: f4d48877c323
+I (115815) HID_DEMO: address type = 0
+I (115815) HID_DEMO: pair status = success
+I (115865) gatt_event: ESP_GATTS_MTU_EVT
+I (115875) gatt_event: ESP_GATTS_MTU_EVT
+I (115975) gatt_event: ESP_GATTS_WRITE_EVT
+I (116005) gatt_event: ESP_GATTS_WRITE_EVT
+I (116035) gatt_event: ESP_GATTS_WRITE_EVT
+I (116045) HID_DEMO: Send the volume
+I (116045) gatt_event: ESP_GATTS_CONF_EVT
+I (116065) gatt_event: ESP_GATTS_WRITE_EVT
+I (116085) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+I (116105) gatt_event: ESP_GATTS_READ_EVT
+I (116255) gap event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+W (118245) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x13
+I (118255) gatt_event: ESP_GATTS_DISCONNECT_EVT
+I (118255) gatt_event: ESP_GATTS_DISCONNECT_EVT
+I (118255) HID_DEMO: ESP_HIDD_EVENT_BLE_DISCONNECT
+I (118275) gap event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+W (119045) BT_LOG: esp_ble_gatts_send_indicate, The connection not created.
+W (119045) BT_LOG: esp_ble_gatts_send_indicate, The connection not created.
+W (122045) BT_LOG: esp_ble_gatts_send_indicate, The connection not created.
+
+</code></pre>
+</li>
+</ul>
+</li>
+<li>Maybe this is because of the device type or service content.
+<ul>
+<li>Change the icon to <code>ESP_BLE_APPEARANCE_GENERIC_HID</code>
+<ul>
+<li>Does not worl</li>
+</ul>
+</li>
+<li>Add HIDD service to profile so that the computer recognize useful service?
+<ul>
+<li>Maybe some things are wrong with the attribute table. Maybe the length is zero.</li>
+<li>Okay, It seems there are some kinds of memory error.
+<ul>
+<li>Let's make it minimal and check if structural problem.</li>
+</ul>
+</li>
+<li>It seems the problem is related with <code>esp_gatts_incl_svc_desc_t incl_svc = {0};</code></li>
+</ul>
+<pre><code>I (1049) app_main: BLE initialized
+I (1049) ble_gap_event: ESP_GAP_BLE_ADV_DATA_SET_COMPLETE_EVT
+I (1059) app_main: Returning app_main
+I (1069) ble_gap_event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+I (40299) ble_gatt_event: ESP_GATTS_CONNECT_EVT, (GATTs_if: 3)
+I (40479) ble_gatt_event: ESP_GATTS_MTU_EVT, (GATTs_if: 3)
+E (40899) BT_BTM: btm_ble_remove_resolving_list_entry_complete remove resolving list error 0x2
+I (41609) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+I (41609) ble: key type = ESP_LE_KEY_LENC
+I (41609) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+I (41619) ble: key type = ESP_LE_KEY_LID
+I (41919) ble_gap_event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+I (42039) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+I (42039) ble: key type = ESP_LE_KEY_PENC
+I (42279) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+I (42279) ble: key type = ESP_LE_KEY_PID
+I (42399) ble_gap_event: ESP_GAP_BLE_AUTH_CMPL_EVT
+I (42399) ble: remote BD_ADDR: f4d48877c323
+I (42399) ble: address type = 0
+I (42399) ble: pair status = success
+I (42409) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+I (42529) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+W (47059) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x8
+I (47059) ble_gatt_event: ESP_GATTS_DISCONNECT_EVT, (GATTs_if: 3)
+I (47069) ble_gap_event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+</code></pre>
+<pre><code>I (77089) ble_gap_event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+I (77259) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+I (77279) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+E (77309) BT_BTM: btm_ble_remove_resolving_list_entry_complete remove resolving list error 0x2
+I (77309) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+I (77329) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+I (77349) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+I (77459) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+I (77459) ble: key type = ESP_LE_KEY_LENC
+I (77459) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+I (77459) ble: key type = ESP_LE_KEY_LID
+I (77469) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+I (77519) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+I (77519) ble: key type = ESP_LE_KEY_PENC
+I (77539) ble_gap_event: ESP_GAP_BLE_KEY_EVT
+I (77539) ble: key type = ESP_LE_KEY_PID
+I (77619) ble_gap_event: ESP_GAP_BLE_AUTH_CMPL_EVT
+I (77619) ble: remote BD_ADDR: f4d48877c323
+I (77619) ble: address type = 0
+I (77619) ble: pair status = success
+I (77619) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+I (77629) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+I (77729) ble_gap_event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+I (77789) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+I (77829) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+lld_pdu_get_tx_flush_nb HCI packet count mismatch (0, 1)
+W (85169) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x8
+I (85179) ble_gatt_event: ESP_GATTS_DISCONNECT_EVT, (GATTs_if: 3)
+I (85189) ble_gap_event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+</code></pre>
+<pre><code>I (7159) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+I (7179) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+I (7189) ble_gap_event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+I (7229) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+I (8029) ble_gap_event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+W (14949) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x8
+I (14949) ble_gatt_event: ESP_GATTS_DISCONNECT_EVT, (GATTs_if: 3)
+I (14969) ble_gap_event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+I (29179) ble_gatt_event: ESP_GATTS_CONNECT_EVT, (GATTs_if: 3)
+I (29509) ble_gap_event: ESP_GAP_BLE_AUTH_CMPL_EVT
+I (29509) ble: remote BD_ADDR: f4d48877c323
+I (29509) ble: address type = 0
+I (29509) ble: pair status = success
+I (29739) ble_gatt_event: ESP_GATTS_MTU_EVT, (GATTs_if: 3)
+I (30189) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+I (30609) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+I (30659) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+I (30689) ble_gap_event: ESP_GAP_BLE_UPDATE_CONN_PARAMS_EVT
+I (30899) ble_gatt_event: ESP_GATTS_WRITE_EVT, (GATTs_if: 3)
+I (31039) ble_gatt_event: ESP_GATTS_READ_EVT, (GATTs_if: 3)
+W (39299) BT_HCI: hcif disc complete: hdl 0x0, rsn 0x8
+I (39299) ble_gatt_event: ESP_GATTS_DISCONNECT_EVT, (GATTs_if: 3)
+I (39309) ble_gap_event: ESP_GAP_BLE_ADV_START_COMPLETE_EVT
+</code></pre>
+</li>
+</ul>
+</li>
+<li>Maybe that read and write event could be the reason
+<ul>
+<li>Need to figure out exactly what does it trying to read and write.</li>
+<li>Make the function to report param detail.</li>
+<li>Paramerter type<pre><code>/**
+* @brief ESP_GATTS_READ_EVT
+*/
+struct gatts_read_evt_param {
+    uint16_t conn_id;               /*!&lt; Connection id */
+    uint32_t trans_id;              /*!&lt; Transfer id */
+    esp_bd_addr_t bda;              /*!&lt; The bluetooth device address which been read */
+    uint16_t handle;                /*!&lt; The attribute handle */
+    uint16_t offset;                /*!&lt; Offset of the value, if the value is too long */
+    bool is_long;                   /*!&lt; The value is too long or not */
+    bool need_rsp;                  /*!&lt; The read operation need to do response */
+} read;                             /*!&lt; Gatt server callback param of ESP_GATTS_READ_EVT */
+
+
+/**
+* @brief ESP_GATTS_WRITE_EVT
+*/
+struct gatts_write_evt_param {
+    uint16_t conn_id;               /*!&lt; Connection id */
+    uint32_t trans_id;              /*!&lt; Transfer id */
+    esp_bd_addr_t bda;              /*!&lt; The bluetooth device address which been written */
+    uint16_t handle;                /*!&lt; The attribute handle */
+    uint16_t offset;                /*!&lt; Offset of the value, if the value is too long */
+    bool need_rsp;                  /*!&lt; The write operation need to do response */
+    bool is_prep;                   /*!&lt; This write operation is prepare write */
+    uint16_t len;                   /*!&lt; The write attribute value length */
+    uint8_t *value;                 /*!&lt; The write attribute value */
+} write;                            /*!&lt; Gatt server callback param of ESP_GATTS_WRITE_EVT */
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h2 id="also-need-to-support-the-include-service">Also need to support the include service.</h2>
+</li>
+</ul>
+</li>
+<li>
+<p>Incremental numbers</p>
+<ul>
+<li>What should be the service and characteristic for this task?</li>
+<li>Predefined UUIDs by Bluetooth standards are <a href="https://btprodspecificationrefs.blob.core.windows.net/assigned-numbers/Assigned%20Number%20Types/Assigned_Numbers.pdf">here</a>.</li>
+<li><a href="https://novelbits.io/bluetooth-gatt-services-characteristics/">This</a> guide is also helpful for  GATT design.</li>
+<li>The way how to enable BLE long read with ESP-IDF BLE stack is <a href="https://sankalpb.github.io/bluetooth-lowenergy/embedded/2019/03/15/BLE-long-read-on-esp32.html">here</a>.</li>
+<li>How could I generate a custom service and characteristic?
+<ul>
+<li>When one creates a custom service or characteristic, it will show up on the client device as an unknown service / characteristic per <a href="https://esp32.com/viewtopic.php?t=12855">this</a> comment.</li>
+</ul>
+</li>
+<li></li>
+</ul>
+</li>
+<li>
+<p>Number buffer</p>
+<ul>
+<li>WIP</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="references">References</h2>
+<p>[^1] <a href="https://embeddedcentric.com/introduction-to-bluetooth-low-energy-bluetooth-5/">https://embeddedcentric.com/introduction-to-bluetooth-low-energy-bluetooth-5/</a></p>
+
+        
+        
+    </body>
+    </html>

@@ -11,3 +11,20 @@ Static data members should be defined outside of the class or struct definition.
 Consider that can't pass templates as arguments. They as to be concrete.
 - A string constant should have the type of `const char *`, not `char *`, even with `constexpr`.
 Some libraries hide async action behind. It could occur some weird output. 
+- A declaration of element should be seen by C linker should be in `extern "C" {}`. 
+    ```
+    #ifdef __cplusplus
+    extern "C"
+    {
+    #endif
+
+    ... CPP CODE FOR C LINKER
+
+    #ifdef __cplusplus
+    }
+    #endif
+    ```
+    - Import C header in `extern "C" {}` block to use in C++.
+- One could use `throw` to fail object construction.
+- Do not specialize template struct inside of another struct. See [this](https://stackoverflow.com/questions/57530656/template-member-specialization-in-template-class).
+- It is good practice to use switch-case statements for template argument. unused paths will not be compiled.
